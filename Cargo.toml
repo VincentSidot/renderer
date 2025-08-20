@@ -1,0 +1,15 @@
+[package]
+name = "renderer"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+colored = { version = "3.0.0", optional = true }
+log = { version = "0.4.27", features = ["std"] }
+
+[features]
+all = ["svg", "logger"]
+default = ["svg", "logger"]
+logger = ["dep:colored"]
+svg = []
+ppm = []
