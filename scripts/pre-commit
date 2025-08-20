@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Pre-commit hook for the renderer project
+# This script runs checks before allowing a commit
+
+echo "Running pre-commit checks..."
+
+# Check for cargo fmt compliance
+echo "Checking code formatting..."
+if ! cargo fmt -- --check; then
+    echo "Error: Code is not properly formatted. Run 'cargo fmt' to fix."
+    exit 1
+fi
+
+# Check for clippy warnings
+echo "Checking for clippy warnings..."
+if ! cargo clippy -- -D warnings; then
+    echo "Error: Clippy found warnings. Please fix them before committing."
+    exit 1
+fi
+
+# Run tests
+echo "Running tests..."
+if ! cargo test -q; then
+    echo "Error: Tests failed. Please fix them before committing."
+    exit 1
+fi
+
+echo "All pre-commit checks passed!"
+exit 0
