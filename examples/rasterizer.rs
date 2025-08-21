@@ -1,5 +1,6 @@
 //! Example demonstrating rasterization
 
+#[cfg(feature = "rasterizer")]
 use renderer::{
     color::Color,
     rasterizer::Rasterizer,
@@ -8,6 +9,7 @@ use renderer::{
     PixelImage,
 };
 
+#[cfg(feature = "rasterizer")]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create a pixel image
     let mut image = PixelImage::new(200, 200);
@@ -60,7 +62,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
+#[cfg(not(feature = "rasterizer"))]
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    println!("Rasterizer feature is not enabled");
+    Ok(())
+}
+
 /// Save the pixel image as a PPM image
+#[cfg(feature = "rasterizer")]
 fn save_as_ppm(image: &PixelImage, path: &str) -> Result<(), Box<dyn std::error::Error>> {
     use std::fs::File;
     use std::io::Write;

@@ -12,12 +12,14 @@ pub use log::Level;
 pub mod backend;
 pub mod color;
 pub mod image;
+#[cfg(feature = "rasterizer")]
 pub mod rasterizer;
 pub mod shape;
 pub mod stroke;
 
 pub use color::Color;
 pub use image::Image;
+#[cfg(feature = "rasterizer")]
 pub use rasterizer::{Pixel, PixelImage};
 pub use shape::{Circle, Ellipse, Line, Polygon, Rectangle, Shape, Text};
 pub use stroke::Stroke;

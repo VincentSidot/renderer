@@ -1,5 +1,6 @@
 //! Binary PPM Backend
 
+#[cfg(feature = "rasterizer")]
 use crate::rasterizer::{PixelImage, Rasterizer};
 use crate::shape::Shape;
 use std::fs::File;
@@ -22,6 +23,7 @@ impl Default for PPMBackend {
     }
 }
 
+#[cfg(feature = "rasterizer")]
 impl super::Backend for PPMBackend {
     fn render(
         &mut self,
@@ -51,7 +53,19 @@ impl super::Backend for PPMBackend {
     }
 }
 
+#[cfg(not(feature = "rasterizer"))]
+impl super::Backend for PPMBackend {
+    fn render(
+        &mut self,
+        _image: &crate::Image,
+        _path: &Path,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        Err("Rasterizer feature is not enabled".into())
+    }
+}
+
 /// Save the pixel image as a binary PPM image
+#[cfg(feature = "rasterizer")]
 fn save_as_binary_ppm(image: &PixelImage, path: &Path) -> Result<(), Box<dyn std::error::Error>> {
     let mut file = File::create(path)?;
     

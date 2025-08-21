@@ -1,5 +1,6 @@
 //! Example demonstrating binary PPM rendering
 
+#[cfg(feature = "ppm")]
 use renderer::{
     backend::PPMBackend,
     color::Color,
@@ -8,6 +9,7 @@ use renderer::{
     stroke,
 };
 
+#[cfg(feature = "ppm")]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut image = Image::new().with_width(200.0).with_height(200.0);
 
@@ -74,5 +76,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     println!("Binary PPM file created at: {}", path.display());
 
+    Ok(())
+}
+
+#[cfg(not(feature = "ppm"))]
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    println!("PPM feature is not enabled");
     Ok(())
 }

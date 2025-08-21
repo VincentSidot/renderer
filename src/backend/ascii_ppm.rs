@@ -1,5 +1,6 @@
 //! ASCII PPM Backend
 
+#[cfg(feature = "rasterizer")]
 use crate::rasterizer::{PixelImage, Rasterizer};
 use crate::shape::Shape;
 use std::fs::File;
@@ -22,6 +23,7 @@ impl Default for AsciiPPMBackend {
     }
 }
 
+#[cfg(feature = "rasterizer")]
 impl super::Backend for AsciiPPMBackend {
     fn render(
         &mut self,
@@ -34,15 +36,15 @@ impl super::Backend for AsciiPPMBackend {
         // Rasterize each shape onto the pixel image
         for shape in &image.shapes {
             match shape {
-                Shape::Rectangle(rect) => rect.rasterize_filled(&mut pixel_image),
-                Shape::Circle(circle) => circle.rasterize_filled(&mut pixel_image),
+                Shape::Rectangle(rect) => rect.rasterize(&mut pixel_image),
+                Shape::Circle(circle) => circle.rasterize(&mut pixel_image),
                 Shape::Line(line) => line.rasterize(&mut pixel_image),
                 Shape::Text(_) => {
                     // Text rasterization is not implemented in this backend
                     // In a real implementation, we would need a font rendering system
                 }
-                Shape::Ellipse(ellipse) => ellipse.rasterize_filled(&mut pixel_image),
-                Shape::Polygon(polygon) => polygon.rasterize_filled(&mut pixel_image),
+                Shape::Ellipse(ellipse) => ellipse.rasterize(&mut pixel_image),
+                Shape::Polygon(polygon) => polygon.rasterize(&mut pixel_image),
             }
         }
         
@@ -51,7 +53,19 @@ impl super::Backend for AsciiPPMBackend {
     }
 }
 
+#[cfg(not(feature = "rasterizer"))]
+impl super::Backend for AsciiPPMBackend {
+    fn render(
+        &mut self,
+        _image: &crate::Image,
+        _path: &Path,
+    ) -> Result<(), Box<dyn std::error::Error>> {
+        Err("Rasterizer feature is not enabled".into())
+    }
+}
+
 /// Save the pixel image as a PPM image
+#[cfg(feature = "rasterizer")]
 fn save_as_ppm(image: &PixelImage, path: &Path) -> Result<(), Box<dyn std::error::Error>> {
     let mut file = File::create(path)?;
     
