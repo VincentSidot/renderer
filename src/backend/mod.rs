@@ -15,6 +15,11 @@ mod ppm;
 #[cfg(feature = "ppm")]
 pub use ppm::PPMBackend;
 
+#[cfg(feature = "png")]
+mod png;
+#[cfg(feature = "png")]
+pub use png::PNGBackend;
+
 use crate::image::Image;
 use std::path::Path;
 

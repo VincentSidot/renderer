@@ -10,8 +10,8 @@ log = { version = "0.4.27", features = ["std"] }
 png = { version = "0.17.16", optional = true }
 
 [features]
-default = ["all"]                            # TODO: Update to default target
-all = ["svg", "logger", "ppm", "rasterizer"]
+default = []
+all = ["svg", "logger", "ppm", "rasterizer", "png"]
 svg = []
 ppm = ["rasterizer"]
 png = ["rasterizer", "dep:png"]

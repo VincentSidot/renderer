@@ -1,7 +1,9 @@
 //! Example demonstrating SVG rendering
 
+#[cfg(feature = "svg")]
 use renderer::{backend::SVGBackend, color::Color, image::Image, shape::*, stroke};
 
+#[cfg(feature = "svg")]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut image = Image::new().with_width(800.0).with_height(600.0);
 
@@ -77,5 +79,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     println!("SVG file created at: {}", path.display());
 
+    Ok(())
+}
+
+#[cfg(not(feature = "svg"))]
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    println!("SVG feature is not enabled");
     Ok(())
 }

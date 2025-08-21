@@ -1,8 +1,11 @@
 //! Example demonstrating the renderer logger with and without location display
 
+#[cfg(feature = "logger")]
 use log::{debug, error, info, trace, warn};
+#[cfg(feature = "logger")]
 use renderer::{Level, init_logger};
 
+#[cfg(feature = "logger")]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Renderer Logger Demo");
     println!("====================");
@@ -32,5 +35,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     warn!("This warning should also appear with location");
 
     println!("\nDemo completed successfully!");
+    Ok(())
+}
+
+#[cfg(not(feature = "logger"))]
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    println!("Logger feature is not enabled. Please enable the 'logger' feature to run this demo.");
     Ok(())
 }
