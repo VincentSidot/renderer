@@ -44,8 +44,8 @@ impl Image {
     }
 
     /// Add a shape to the image
-    pub fn add(&mut self, shape: Shape) {
-        self.shapes.push(shape);
+    pub fn add(&mut self, shape: impl Into<Shape>) {
+        self.shapes.push(shape.into());
     }
 
     /// Save the image using the provided backend

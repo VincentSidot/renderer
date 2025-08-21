@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+ab_glyph = { version = "0.2.31", optional = true }
 colored = { version = "3.0.0", optional = true }
 log = { version = "0.4.27", features = ["std"] }
 
@@ -13,4 +14,4 @@ all = ["svg", "logger", "ppm", "rasterizer"]
 svg = []
 ppm = ["rasterizer"]
 logger = ["dep:colored"]
-rasterizer = []
+rasterizer = ["dep:ab_glyph"]
