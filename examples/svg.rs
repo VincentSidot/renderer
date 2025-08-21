@@ -78,7 +78,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     ));
 
     let mut svg = SVGBackend::init();
-    let path = std::path::Path::new("output.svg");
+    let path = std::path::Path::new("./trash/output.svg");
     image.save(path, &mut svg)?;
 
     println!("SVG file created at: {}", path.display());
