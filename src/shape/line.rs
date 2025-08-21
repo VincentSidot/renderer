@@ -5,13 +5,13 @@ use std::convert::Into;
 #[derive(Debug, Clone)]
 pub struct Line {
     /// Start X position
-    pub x1: f32,
+    pub x1: f64,
     /// Start Y position
-    pub y1: f32,
+    pub y1: f64,
     /// End X position
-    pub x2: f32,
+    pub x2: f64,
     /// End Y position
-    pub y2: f32,
+    pub y2: f64,
     /// Stroke
     pub stroke: Option<Stroke>,
 }
@@ -34,8 +34,8 @@ impl Line {
         T: Into<f64>,
         U: Into<f64>,
     {
-        self.x1 = x.into() as f32;
-        self.y1 = y.into() as f32;
+        self.x1 = x.into();
+        self.y1 = y.into();
         self
     }
 
@@ -45,8 +45,8 @@ impl Line {
         T: Into<f64>,
         U: Into<f64>,
     {
-        self.x2 = x.into() as f32;
-        self.y2 = y.into() as f32;
+        self.x2 = x.into();
+        self.y2 = y.into();
         self
     }
 

@@ -6,13 +6,13 @@ use std::convert::Into;
 #[derive(Debug, Clone)]
 pub struct Ellipse {
     /// X position
-    pub x: f32,
+    pub x: f64,
     /// Y position
-    pub y: f32,
+    pub y: f64,
     /// Radius along the x-axis
-    pub radius_x: f32,
+    pub radius_x: f64,
     /// Radius along the y-axis
-    pub radius_y: f32,
+    pub radius_y: f64,
     /// Fill color
     pub fill_color: Option<Color>,
     /// Stroke
@@ -38,8 +38,8 @@ impl Ellipse {
         T: Into<f64>,
         U: Into<f64>,
     {
-        self.x = x.into() as f32;
-        self.y = y.into() as f32;
+        self.x = x.into();
+        self.y = y.into();
         self
     }
 
@@ -49,8 +49,8 @@ impl Ellipse {
         T: Into<f64>,
         U: Into<f64>,
     {
-        self.radius_x = radius_x.into() as f32;
-        self.radius_y = radius_y.into() as f32;
+        self.radius_x = radius_x.into();
+        self.radius_y = radius_y.into();
         self
     }
 

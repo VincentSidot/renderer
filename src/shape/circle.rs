@@ -6,11 +6,11 @@ use std::convert::Into;
 #[derive(Debug, Clone)]
 pub struct Circle {
     /// X position
-    pub x: f32,
+    pub x: f64,
     /// Y position
-    pub y: f32,
+    pub y: f64,
     /// Radius
-    pub radius: f32,
+    pub radius: f64,
     /// Fill color
     pub fill_color: Option<Color>,
     /// Stroke
@@ -35,8 +35,8 @@ impl Circle {
         T: Into<f64>,
         U: Into<f64>,
     {
-        self.x = x.into() as f32;
-        self.y = y.into() as f32;
+        self.x = x.into();
+        self.y = y.into();
         self
     }
 
@@ -45,7 +45,7 @@ impl Circle {
     where
         T: Into<f64>,
     {
-        self.radius = radius.into() as f32;
+        self.radius = radius.into();
         self
     }
 

@@ -1,17 +1,29 @@
 mod circle;
+mod circle_builder;
 mod ellipse;
+mod ellipse_builder;
 mod line;
+mod line_builder;
 mod polygon;
+mod polygon_builder;
 mod rect;
+mod rect_builder;
 mod tests;
 mod text;
+mod text_builder;
 
 pub use circle::Circle;
+pub use circle_builder::CircleBuilder;
 pub use ellipse::Ellipse;
+pub use ellipse_builder::EllipseBuilder;
 pub use line::Line;
+pub use line_builder::LineBuilder;
 pub use polygon::Polygon;
+pub use polygon_builder::PolygonBuilder;
 pub use rect::Rectangle;
+pub use rect_builder::RectangleBuilder;
 pub use text::Text;
+pub use text_builder::TextBuilder;
 
 // /// Enum representing all possible shapes
 // #[derive(Debug, Clone)]

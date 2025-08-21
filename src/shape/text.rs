@@ -5,13 +5,13 @@ use std::convert::Into;
 #[derive(Debug, Clone)]
 pub struct Text {
     /// X position
-    pub x: f32,
+    pub x: f64,
     /// Y position
-    pub y: f32,
+    pub y: f64,
     /// Text content
     pub content: String,
     /// Font size
-    pub font_size: f32,
+    pub font_size: f64,
     /// Fill color
     pub fill_color: Option<Color>,
 }
@@ -34,8 +34,8 @@ impl Text {
         T: Into<f64>,
         U: Into<f64>,
     {
-        self.x = x.into() as f32;
-        self.y = y.into() as f32;
+        self.x = x.into();
+        self.y = y.into();
         self
     }
 
@@ -50,7 +50,7 @@ impl Text {
     where
         T: Into<f64>,
     {
-        self.font_size = size.into() as f32;
+        self.font_size = size.into();
         self
     }
 

@@ -10,6 +10,7 @@ pub use logger::init_logger;
 pub use log::Level;
 
 pub mod backend;
+pub mod builder;
 pub mod color;
 pub mod image;
 #[cfg(feature = "rasterizer")]
@@ -17,6 +18,7 @@ pub mod rasterizer;
 pub mod shape;
 pub mod stroke;
 
+pub use builder::{BuildError, ShapeBuilder};
 pub use color::Color;
 pub use image::Image;
 #[cfg(feature = "rasterizer")]

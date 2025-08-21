@@ -6,13 +6,13 @@ use std::convert::Into;
 #[derive(Debug, Clone)]
 pub struct Rectangle {
     /// X position
-    pub x: f32,
+    pub x: f64,
     /// Y position
-    pub y: f32,
+    pub y: f64,
     /// Width
-    pub width: f32,
+    pub width: f64,
     /// Height
-    pub height: f32,
+    pub height: f64,
     /// Fill color
     pub fill_color: Option<Color>,
     /// Stroke
@@ -38,8 +38,8 @@ impl Rectangle {
         T: Into<f64>,
         U: Into<f64>,
     {
-        self.x = x.into() as f32;
-        self.y = y.into() as f32;
+        self.x = x.into();
+        self.y = y.into();
         self
     }
 
@@ -49,8 +49,8 @@ impl Rectangle {
         T: Into<f64>,
         U: Into<f64>,
     {
-        self.width = width.into() as f32;
-        self.height = height.into() as f32;
+        self.width = width.into();
+        self.height = height.into();
         self
     }
 

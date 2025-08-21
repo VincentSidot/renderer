@@ -6,7 +6,7 @@ use std::convert::Into;
 #[derive(Debug, Clone)]
 pub struct Polygon {
     /// Points of the polygon (x, y)
-    pub points: Vec<(f32, f32)>,
+    pub points: Vec<(f64, f64)>,
     /// Fill color
     pub fill_color: Option<Color>,
     /// Stroke
@@ -29,12 +29,12 @@ impl Polygon {
         T: Into<f64>,
         U: Into<f64>,
     {
-        self.points.push((x.into() as f32, y.into() as f32));
+        self.points.push((x.into(), y.into()));
         self
     }
 
     /// Set multiple points for the polygon
-    pub fn with_points(mut self, points: Vec<(f32, f32)>) -> Self {
+    pub fn with_points(mut self, points: Vec<(f64, f64)>) -> Self {
         self.points = points;
         self
     }
