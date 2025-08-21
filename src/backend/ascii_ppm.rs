@@ -1,4 +1,4 @@
-//! Binary PPM Backend
+//! ASCII PPM Backend
 
 use crate::rasterizer::{PixelImage, Rasterizer};
 use crate::shape::Shape;
@@ -7,22 +7,22 @@ use std::io::Write;
 use std::path::Path;
 
 #[derive(Debug)]
-pub struct PPMBackend;
+pub struct AsciiPPMBackend;
 
-impl PPMBackend {
-    /// Create a new binary PPM backend
+impl AsciiPPMBackend {
+    /// Create a new ASCII PPM backend
     pub fn new() -> Self {
         Self
     }
 }
 
-impl Default for PPMBackend {
+impl Default for AsciiPPMBackend {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl super::Backend for PPMBackend {
+impl super::Backend for AsciiPPMBackend {
     fn render(
         &mut self,
         image: &crate::Image,
@@ -46,23 +46,23 @@ impl super::Backend for PPMBackend {
             }
         }
         
-        // Save the pixel image as a binary PPM file
-        save_as_binary_ppm(&pixel_image, path)
+        // Save the pixel image as a PPM file
+        save_as_ppm(&pixel_image, path)
     }
 }
 
-/// Save the pixel image as a binary PPM image
-fn save_as_binary_ppm(image: &PixelImage, path: &Path) -> Result<(), Box<dyn std::error::Error>> {
+/// Save the pixel image as a PPM image
+fn save_as_ppm(image: &PixelImage, path: &Path) -> Result<(), Box<dyn std::error::Error>> {
     let mut file = File::create(path)?;
     
-    // Write PPM header (P6 indicates binary format)
-    writeln!(file, "P6")?;
+    // Write PPM header
+    writeln!(file, "P3")?;
     writeln!(file, "{} {}", image.width, image.height)?;
     writeln!(file, "255")?;
     
-    // Write pixel data as binary
+    // Write pixel data
     for pixel in &image.pixels {
-        file.write_all(&[pixel.r, pixel.g, pixel.b])?;
+        writeln!(file, "{} {} {}", pixel.r, pixel.g, pixel.b)?;
     }
     
     Ok(())

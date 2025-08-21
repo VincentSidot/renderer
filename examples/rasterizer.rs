@@ -2,17 +2,18 @@
 
 use renderer::{
     color::Color,
-    rasterizer::{RasterBuffer, Rasterizer},
+    rasterizer::Rasterizer,
     shape::{Circle, Line, Polygon, Rectangle},
     stroke,
+    PixelImage,
 };
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Create a raster buffer
-    let mut buffer = RasterBuffer::new(200, 200);
+    // Create a pixel image
+    let mut image = PixelImage::new(200, 200);
     
-    // Clear the buffer with white
-    buffer.fill(renderer::rasterizer::Pixel::WHITE);
+    // Clear the image with white
+    image.fill(renderer::Pixel::WHITE);
     
     // Create and rasterize a rectangle
     let rectangle = Rectangle::new()
@@ -20,7 +21,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .with_size(50.0, 30.0)
         .with_fill_color(Color::RED);
     
-    rectangle.rasterize(&mut buffer);
+    rectangle.rasterize_filled(&mut image);
     
     // Create and rasterize a circle
     let circle = Circle::new()
@@ -28,7 +29,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .with_radius(25.0)
         .with_fill_color(Color::BLUE);
     
-    circle.rasterize(&mut buffer);
+    circle.rasterize_filled(&mut image);
     
     // Create and rasterize a line
     let line = Line::new()
@@ -40,7 +41,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .with_color(Color::GREEN),
         );
     
-    line.rasterize(&mut buffer);
+    line.rasterize(&mut image); // Lines don't have a filled version
     
     // Create and rasterize a polygon (triangle)
     let triangle = Polygon::new()
@@ -49,18 +50,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .add_point(120.0, 80.0)
         .with_fill_color(Color::GREEN);
     
-    triangle.rasterize(&mut buffer);
+    triangle.rasterize_filled(&mut image);
     
     // Save as a simple PPM image
-    save_as_ppm(&buffer, "./trash/output.ppm")?;
+    save_as_ppm(&image, "./trash/output.ppm")?;
     
     println!("Rasterized image saved to ./trash/output.ppm");
     
     Ok(())
 }
 
-/// Save the raster buffer as a PPM image
-fn save_as_ppm(buffer: &RasterBuffer, path: &str) -> Result<(), Box<dyn std::error::Error>> {
+/// Save the pixel image as a PPM image
+fn save_as_ppm(image: &PixelImage, path: &str) -> Result<(), Box<dyn std::error::Error>> {
     use std::fs::File;
     use std::io::Write;
     
@@ -68,11 +69,11 @@ fn save_as_ppm(buffer: &RasterBuffer, path: &str) -> Result<(), Box<dyn std::err
     
     // Write PPM header
     writeln!(file, "P3")?;
-    writeln!(file, "{} {}", buffer.width, buffer.height)?;
+    writeln!(file, "{} {}", image.width, image.height)?;
     writeln!(file, "255")?;
     
     // Write pixel data
-    for pixel in &buffer.pixels {
+    for pixel in &image.pixels {
         writeln!(file, "{} {} {}", pixel.r, pixel.g, pixel.b)?;
     }
     

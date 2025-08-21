@@ -18,5 +18,6 @@ pub mod stroke;
 
 pub use color::Color;
 pub use image::Image;
+pub use rasterizer::{Pixel, PixelImage};
 pub use shape::{Circle, Ellipse, Line, Polygon, Rectangle, Shape, Text};
 pub use stroke::Stroke;

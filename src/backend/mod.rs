@@ -6,6 +6,11 @@ mod svg;
 pub use svg::SVGBackend;
 
 #[cfg(feature = "ppm")]
+mod ascii_ppm;
+#[cfg(feature = "ppm")]
+pub use ascii_ppm::AsciiPPMBackend;
+
+#[cfg(feature = "ppm")]
 mod ppm;
 #[cfg(feature = "ppm")]
 pub use ppm::PPMBackend;
