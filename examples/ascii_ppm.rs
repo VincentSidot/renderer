@@ -11,7 +11,7 @@ use renderer::{
 
 #[cfg(feature = "ppm")]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let mut image = Image::new().with_width(200.0).with_height(200.0);
+    let mut image = Image::new().with_width(400.0).with_height(300.0);
 
     image.add(Shape::Rectangle(
         shape::Rectangle::new()
@@ -68,6 +68,31 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     .with_size(1.0)
                     .with_color(Color::BLACK),
             ),
+    ));
+
+    // Add text with different font sizes
+    image.add(Shape::Text(
+        shape::Text::new()
+            .with_pos(200.0, 250.0)
+            .with_text("Small text")
+            .with_font_size(12.0)
+            .with_fill_color(Color::rgb8(0x00, 0x00, 0x00)),
+    ));
+
+    image.add(Shape::Text(
+        shape::Text::new()
+            .with_pos(200.0, 270.0)
+            .with_text("Medium text")
+            .with_font_size(24.0)
+            .with_fill_color(Color::rgb8(0x00, 0x00, 0x00)),
+    ));
+
+    image.add(Shape::Text(
+        shape::Text::new()
+            .with_pos(200.0, 300.0)
+            .with_text("Large text")
+            .with_font_size(36.0)
+            .with_fill_color(Color::rgb8(0x00, 0x00, 0x00)),
     ));
 
     let mut ppm = AsciiPPMBackend::new();

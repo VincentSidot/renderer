@@ -7,11 +7,13 @@ edition = "2024"
 ab_glyph = { version = "0.2.31", optional = true }
 colored = { version = "3.0.0", optional = true }
 log = { version = "0.4.27", features = ["std"] }
+png = { version = "0.17.16", optional = true }
 
 [features]
 default = ["all"]                            # TODO: Update to default target
 all = ["svg", "logger", "ppm", "rasterizer"]
 svg = []
 ppm = ["rasterizer"]
+png = ["rasterizer", "dep:png"]
 logger = ["dep:colored"]
 rasterizer = ["dep:ab_glyph"]

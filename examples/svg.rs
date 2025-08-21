@@ -1,18 +1,12 @@
 //! Example demonstrating SVG rendering
 
-use renderer::{
-    backend::SVGBackend,
-    color::Color,
-    image::Image,
-    shape::{self, Shape},
-    stroke,
-};
+use renderer::{backend::SVGBackend, color::Color, image::Image, shape::*, stroke};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut image = Image::new().with_width(800.0).with_height(600.0);
 
     image.add(
-        shape::Rectangle::new()
+        Rectangle::new()
             .with_pos(20.0, 40.0)
             .with_size(50.0, 50.0)
             .with_fill_color(Color::RED)
@@ -24,14 +18,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     );
 
     image.add(
-        shape::Circle::new()
+        Circle::new()
             .with_pos(100.0, 100.0)
             .with_radius(50.0)
             .with_fill_color(Color::rgba(1.0, 0.0, 0.0, 0.5)),
     );
 
     image.add(
-        shape::Line::new()
+        Line::new()
             .with_pos(200.0, 200.0)
             .with_end(300.0, 300.0)
             .with_stroke(
@@ -42,7 +36,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     );
 
     image.add(
-        shape::Text::new()
+        Text::new()
             .with_pos(400.0, 400.0)
             .with_text("Hello, SVG!")
             .with_font_size(24.0)
@@ -51,7 +45,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Add new shapes
     image.add(
-        shape::Ellipse::new()
+        Ellipse::new()
             .with_pos(600.0, 100.0)
             .with_radii(60.0, 40.0)
             .with_fill_color(Color::GREEN)
@@ -63,7 +57,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     );
 
     image.add(
-        shape::Polygon::new()
+        Polygon::new()
             .add_point(500.0, 300.0)
             .add_point(550.0, 250.0)
             .add_point(600.0, 300.0)

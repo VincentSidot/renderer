@@ -1,19 +1,33 @@
 //! ASCII PPM Backend
 
 #[cfg(feature = "rasterizer")]
-use crate::rasterizer::{PixelImage, Rasterizer};
+use crate::rasterizer::{FontRenderer, PixelImage, Rasterizer};
 use crate::shape::Shape;
 use std::fs::File;
 use std::io::Write;
 use std::path::Path;
 
 #[derive(Debug)]
-pub struct AsciiPPMBackend;
+pub struct AsciiPPMBackend {
+    #[cfg(feature = "rasterizer")]
+    font_data: Option<Vec<u8>>,
+}
 
 impl AsciiPPMBackend {
     /// Create a new ASCII PPM backend
     pub fn new() -> Self {
-        Self
+        Self {
+            #[cfg(feature = "rasterizer")]
+            font_data: None,
+        }
+    }
+    
+    /// Create a new ASCII PPM backend with custom font data
+    #[cfg(feature = "rasterizer")]
+    pub fn with_font_data(font_data: Vec<u8>) -> Self {
+        Self {
+            font_data: Some(font_data),
+        }
     }
 }
 
@@ -39,9 +53,28 @@ impl super::Backend for AsciiPPMBackend {
                 Shape::Rectangle(rect) => rect.rasterize(&mut pixel_image),
                 Shape::Circle(circle) => circle.rasterize(&mut pixel_image),
                 Shape::Line(line) => line.rasterize(&mut pixel_image),
-                Shape::Text(_) => {
-                    // Text rasterization is not implemented in this backend
-                    // In a real implementation, we would need a font rendering system
+                Shape::Text(text) => {
+                    // Render text with the font renderer
+                    let color = text.fill_color.unwrap_or(crate::Color::BLACK);
+                    let pixel_color = crate::rasterizer::Pixel::new(
+                        (color.r * 255.0) as u8,
+                        (color.g * 255.0) as u8,
+                        (color.b * 255.0) as u8,
+                        (color.a * 255.0) as u8,
+                    );
+                    // Create a font renderer with the text's font size
+                    let text_font_renderer = if let Some(ref font_data) = self.font_data {
+                        FontRenderer::new(Some(font_data.as_slice()), text.font_size)?
+                    } else {
+                        FontRenderer::default(text.font_size)?
+                    };
+                    let _ = text_font_renderer.rasterize_text(
+                        &mut pixel_image,
+                        &text.content,
+                        text.x as usize,
+                        text.y as usize,
+                        pixel_color,
+                    );
                 }
                 Shape::Ellipse(ellipse) => ellipse.rasterize(&mut pixel_image),
                 Shape::Polygon(polygon) => polygon.rasterize(&mut pixel_image),

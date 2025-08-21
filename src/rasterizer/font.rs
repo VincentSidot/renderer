@@ -1,72 +1,13 @@
 //! Font rasterization using ab_glyph
-use std::borrow::Cow;
-use std::path::Path;
 
 #[cfg(feature = "rasterizer")]
 use crate::rasterizer::{Pixel, PixelImage};
 #[cfg(feature = "rasterizer")]
 use ab_glyph::{Font, FontRef, PxScale, ScaleFont};
-#[cfg(feature = "rasterizer")]
-use std::fs;
 
 /// Include the default Ubuntu font as bytes
 #[cfg(feature = "rasterizer")]
 const DEFAULT_FONT: &[u8] = include_bytes!("../../font/ubuntu.ttf");
-
-#[cfg(feature = "rasterizer")]
-#[derive(Debug)]
-struct FontCow<'f> {
-    _font_data: Cow<'f, [u8]>,
-    font: FontRef<'f>,
-}
-
-impl<'f> FontCow<'f> {
-    fn init<F, P>(font_data: Option<F>) -> Result<Self, Box<dyn std::error::Error>>
-    where
-        P: AsRef<Path> + 'f,
-        F: Into<FontSource<'f, P>>,
-    {
-        let font_data: Cow<'f, [u8]> = font_data
-            .map(|data| match data.into() {
-                FontSource::Bytes(bytes) => Cow::Borrowed(bytes),
-                FontSource::Path(path) => {
-                    if let Ok(bytes) = fs::read(path) {
-                        Cow::Owned(bytes)
-                    } else {
-                        log::error!("Failed to read file {}", path.as_ref().display());
-                        Cow::Borrowed(DEFAULT_FONT)
-                    }
-                }
-            })
-            .unwrap_or(Cow::Borrowed(DEFAULT_FONT));
-
-        let leaked_font_data: &'static [u8] = unsafe {
-            /*
-             * SAFETY: This is safe because we own the font_data in the structure,
-             * and we ensure that the lifetime of the font_data
-             */
-            core::mem::transmute_copy(&font_data.as_ref())
-        };
-
-        let font: FontRef<'f> = FontRef::try_from_slice(leaked_font_data)?;
-        Ok(Self {
-            _font_data: font_data,
-            font,
-        })
-    }
-
-    pub fn default() -> Result<Self, Box<dyn std::error::Error>> {
-        let font = FontRef::try_from_slice(DEFAULT_FONT)?;
-        Ok(Self {
-            font,
-            _font_data: Cow::Borrowed(DEFAULT_FONT),
-        })
-    }
-
-    pub fn font(&self) -> &FontRef<'f> {
-        &self.font
-    }
-}
 
 /// A font that can be used to render text
 #[derive(Debug)]
@@ -213,10 +154,10 @@ impl<'f> FontRenderer<'f> {
 #[cfg(not(feature = "rasterizer"))]
 impl FontRenderer {
     /// Create a new font renderer with the specified font data and size
-    pub fn new<F>(_font_data: F, _size: f32) -> Result<Self, Box<dyn std::error::Error>>
-    where
-        F: Into<FontSource>,
-    {
+    pub fn new(
+        _font_data: Option<&'f [u8]>,
+        _size: f32,
+    ) -> Result<Self, Box<dyn std::error::Error>> {
         Err("Rasterizer feature is not enabled".into())
     }
 
