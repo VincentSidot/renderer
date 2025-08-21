@@ -1,4 +1,5 @@
 use crate::Stroke;
+use std::convert::Into;
 
 /// A line shape
 #[derive(Debug, Clone)]
@@ -28,16 +29,24 @@ impl Line {
     }
 
     /// Set the start position of the line
-    pub fn with_pos(mut self, x: f32, y: f32) -> Self {
-        self.x1 = x;
-        self.y1 = y;
+    pub fn with_pos<T, U>(mut self, x: T, y: U) -> Self
+    where
+        T: Into<f64>,
+        U: Into<f64>,
+    {
+        self.x1 = x.into() as f32;
+        self.y1 = y.into() as f32;
         self
     }
 
     /// Set the end position of the line
-    pub fn with_end(mut self, x: f32, y: f32) -> Self {
-        self.x2 = x;
-        self.y2 = y;
+    pub fn with_end<T, U>(mut self, x: T, y: U) -> Self
+    where
+        T: Into<f64>,
+        U: Into<f64>,
+    {
+        self.x2 = x.into() as f32;
+        self.y2 = y.into() as f32;
         self
     }
 

@@ -1,5 +1,6 @@
 use crate::Color;
 use crate::Stroke;
+use std::convert::Into;
 
 /// A rectangle shape
 #[derive(Debug, Clone)]
@@ -32,16 +33,24 @@ impl Rectangle {
     }
 
     /// Set the position of the rectangle
-    pub fn with_pos(mut self, x: f32, y: f32) -> Self {
-        self.x = x;
-        self.y = y;
+    pub fn with_pos<T, U>(mut self, x: T, y: U) -> Self
+    where
+        T: Into<f64>,
+        U: Into<f64>,
+    {
+        self.x = x.into() as f32;
+        self.y = y.into() as f32;
         self
     }
 
     /// Set the size of the rectangle
-    pub fn with_size(mut self, width: f32, height: f32) -> Self {
-        self.width = width;
-        self.height = height;
+    pub fn with_size<T, U>(mut self, width: T, height: U) -> Self
+    where
+        T: Into<f64>,
+        U: Into<f64>,
+    {
+        self.width = width.into() as f32;
+        self.height = height.into() as f32;
         self
     }
 

@@ -3,6 +3,7 @@ mod ellipse;
 mod line;
 mod polygon;
 mod rect;
+mod tests;
 mod text;
 
 pub use circle::Circle;

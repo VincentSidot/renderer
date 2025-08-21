@@ -1,4 +1,5 @@
 use crate::Color;
+use std::convert::Into;
 
 /// A text shape
 #[derive(Debug, Clone)]
@@ -28,9 +29,13 @@ impl Text {
     }
 
     /// Set the position of the text
-    pub fn with_pos(mut self, x: f32, y: f32) -> Self {
-        self.x = x;
-        self.y = y;
+    pub fn with_pos<T, U>(mut self, x: T, y: U) -> Self
+    where
+        T: Into<f64>,
+        U: Into<f64>,
+    {
+        self.x = x.into() as f32;
+        self.y = y.into() as f32;
         self
     }
 
@@ -41,8 +46,11 @@ impl Text {
     }
 
     /// Set the font size
-    pub fn with_font_size(mut self, size: f32) -> Self {
-        self.font_size = size;
+    pub fn with_font_size<T>(mut self, size: T) -> Self
+    where
+        T: Into<f64>,
+    {
+        self.font_size = size.into() as f32;
         self
     }
 

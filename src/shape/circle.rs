@@ -1,5 +1,6 @@
 use crate::Color;
 use crate::Stroke;
+use std::convert::Into;
 
 /// A circle shape
 #[derive(Debug, Clone)]
@@ -29,15 +30,22 @@ impl Circle {
     }
 
     /// Set the position of the circle
-    pub fn with_pos(mut self, x: f32, y: f32) -> Self {
-        self.x = x;
-        self.y = y;
+    pub fn with_pos<T, U>(mut self, x: T, y: U) -> Self
+    where
+        T: Into<f64>,
+        U: Into<f64>,
+    {
+        self.x = x.into() as f32;
+        self.y = y.into() as f32;
         self
     }
 
     /// Set the radius of the circle
-    pub fn with_radius(mut self, radius: f32) -> Self {
-        self.radius = radius;
+    pub fn with_radius<T>(mut self, radius: T) -> Self
+    where
+        T: Into<f64>,
+    {
+        self.radius = radius.into() as f32;
         self
     }
 

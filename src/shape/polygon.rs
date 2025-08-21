@@ -1,5 +1,6 @@
 use crate::Color;
 use crate::Stroke;
+use std::convert::Into;
 
 /// A polygon shape
 #[derive(Debug, Clone)]
@@ -23,8 +24,12 @@ impl Polygon {
     }
 
     /// Add a point to the polygon
-    pub fn add_point(mut self, x: f32, y: f32) -> Self {
-        self.points.push((x, y));
+    pub fn add_point<T, U>(mut self, x: T, y: U) -> Self
+    where
+        T: Into<f64>,
+        U: Into<f64>,
+    {
+        self.points.push((x.into() as f32, y.into() as f32));
         self
     }
 

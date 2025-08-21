@@ -32,7 +32,7 @@ impl super::Backend for PPMBackend {
     ) -> Result<(), Box<dyn std::error::Error>> {
         // Create a pixel image with the same dimensions as the image
         let mut pixel_image = PixelImage::new(image.width as usize, image.height as usize);
-        
+
         // Rasterize each shape onto the pixel image
         for shape in &image.shapes {
             match shape {
@@ -47,7 +47,7 @@ impl super::Backend for PPMBackend {
                 Shape::Polygon(polygon) => polygon.rasterize_filled(&mut pixel_image),
             }
         }
-        
+
         // Save the pixel image as a binary PPM file
         save_as_binary_ppm(&pixel_image, path)
     }
@@ -68,16 +68,16 @@ impl super::Backend for PPMBackend {
 #[cfg(feature = "rasterizer")]
 fn save_as_binary_ppm(image: &PixelImage, path: &Path) -> Result<(), Box<dyn std::error::Error>> {
     let mut file = File::create(path)?;
-    
+
     // Write PPM header (P6 indicates binary format)
     writeln!(file, "P6")?;
     writeln!(file, "{} {}", image.width, image.height)?;
     writeln!(file, "255")?;
-    
+
     // Write pixel data as binary
     for pixel in &image.pixels {
         file.write_all(&[pixel.r, pixel.g, pixel.b])?;
     }
-    
+
     Ok(())
 }
