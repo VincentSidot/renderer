@@ -1,6 +1,6 @@
 //! Image module for the renderer
 
-use crate::shape::Shape;
+use crate::{backend::Backend, shape::Shape};
 use std::path::Path;
 
 /// Image representation
@@ -55,10 +55,4 @@ impl Default for Image {
     fn default() -> Self {
         Self::new()
     }
-}
-
-/// Backend trait for rendering images
-pub trait Backend {
-    /// Render an image to a file
-    fn render(&mut self, image: &Image, path: &Path) -> Result<(), Box<dyn std::error::Error>>;
 }

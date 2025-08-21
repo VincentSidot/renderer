@@ -1,4 +1,4 @@
-//! Backend module for the renderer
+//! SVG backend implementation
 
 use crate::{image::Image, shape::Shape};
 use std::fs::File;
@@ -16,7 +16,7 @@ impl SVGBackend {
     }
 }
 
-impl crate::image::Backend for SVGBackend {
+impl super::Backend for SVGBackend {
     fn render(&mut self, image: &Image, path: &Path) -> Result<(), Box<dyn std::error::Error>> {
         let mut file = File::create(path)?;
 

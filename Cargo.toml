@@ -8,8 +8,9 @@ colored = { version = "3.0.0", optional = true }
 log = { version = "0.4.27", features = ["std"] }
 
 [features]
-default = ["svg", "logger"]
-all = ["svg", "logger"]
-logger = ["dep:colored"]
+default = ["all"]                            # TODO: Update to default target
+all = ["svg", "logger", "ppm", "rasterizer"]
 svg = []
-ppm = []
+ppm = ["rasterizer"]
+logger = ["dep:colored"]
+rasterizer = []

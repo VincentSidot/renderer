@@ -9,24 +9,14 @@ pub use logger::init_logger;
 // Re-export log::Level to make it accessible from outside the module
 pub use log::Level;
 
-#[cfg(feature = "svg")]
 pub mod backend;
-#[cfg(feature = "svg")]
 pub mod color;
-#[cfg(feature = "svg")]
 pub mod image;
-#[cfg(feature = "svg")]
+pub mod rasterizer;
 pub mod shape;
-#[cfg(feature = "svg")]
 pub mod stroke;
 
-#[cfg(feature = "svg")]
-pub use backend::*;
-#[cfg(feature = "svg")]
-pub use color::*;
-#[cfg(feature = "svg")]
-pub use image::*;
-#[cfg(feature = "svg")]
-pub use shape::*;
-#[cfg(feature = "svg")]
-pub use stroke::*;
+pub use color::Color;
+pub use image::Image;
+pub use shape::{Circle, Ellipse, Line, Polygon, Rectangle, Shape, Text};
+pub use stroke::Stroke;
