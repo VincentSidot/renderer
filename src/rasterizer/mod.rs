@@ -120,14 +120,14 @@ pub trait Rasterizer {
 
 impl Rasterizer for Rectangle {
     fn rasterize(&self, image: &mut PixelImage) {
-        let x1 = self.x.max(0.0).min(image.width as f32 - 1.0) as usize;
-        let y1 = self.y.max(0.0).min(image.height as f32 - 1.0) as usize;
+        let x1 = self.x.max(0.0).min(image.width as f64 - 1.0) as usize;
+        let y1 = self.y.max(0.0).min(image.height as f64 - 1.0) as usize;
         let x2 = (self.x + self.width)
             .max(0.0)
-            .min(image.width as f32 - 1.0) as usize;
+            .min(image.width as f64 - 1.0) as usize;
         let y2 = (self.y + self.height)
             .max(0.0)
-            .min(image.height as f32 - 1.0) as usize;
+            .min(image.height as f64 - 1.0) as usize;
         
         // Use a simple color conversion for now
         let color = self.fill_color.unwrap_or(crate::Color::BLACK);
@@ -153,8 +153,8 @@ impl Rasterizer for Rectangle {
     fn rasterize_filled(&self, image: &mut PixelImage) {
         let x1 = self.x.max(0.0) as usize;
         let y1 = self.y.max(0.0) as usize;
-        let x2 = (self.x + self.width).min(image.width as f32 - 1.0) as usize;
-        let y2 = (self.y + self.height).min(image.height as f32 - 1.0) as usize;
+        let x2 = (self.x + self.width).min(image.width as f64 - 1.0) as usize;
+        let y2 = (self.y + self.height).min(image.height as f64 - 1.0) as usize;
         
         // Use a simple color conversion for now
         let color = self.fill_color.unwrap_or(crate::Color::BLACK);
@@ -639,9 +639,9 @@ impl Rasterizer for Polygon {
         
         // Clamp to image bounds
         let min_x = min_x.max(0.0) as usize;
-        let max_x = max_x.min(image.width as f32 - 1.0) as usize;
+        let max_x = max_x.min(image.width as f64 - 1.0) as usize;
         let min_y = min_y.max(0.0) as usize;
-        let max_y = max_y.min(image.height as f32 - 1.0) as usize;
+        let max_y = max_y.min(image.height as f64 - 1.0) as usize;
         
         // Scanline fill algorithm
         for y in min_y..=max_y {
@@ -653,9 +653,9 @@ impl Rasterizer for Polygon {
                 let p2 = self.points[(i + 1) % self.points.len()];
                 
                 // Check if the edge crosses the current scanline
-                if (p1.1 > y as f32) != (p2.1 > y as f32) {
+                if (p1.1 > y as f64) != (p2.1 > y as f64) {
                     // Calculate the intersection point
-                    let x = p1.0 + (y as f32 - p1.1) * (p2.0 - p1.0) / (p2.1 - p1.1);
+                    let x = p1.0 + (y as f64 - p1.1) * (p2.0 - p1.0) / (p2.1 - p1.1);
                     intersections.push(x);
                 }
             }
@@ -666,8 +666,8 @@ impl Rasterizer for Polygon {
             // Fill between pairs of intersections
             for i in (0..intersections.len()).step_by(2) {
                 if i + 1 < intersections.len() {
-                    let x1 = intersections[i].max(min_x as f32).max(0.0) as usize;
-                    let x2 = intersections[i + 1].min(max_x as f32).min(image.width as f32 - 1.0) as usize;
+                    let x1 = intersections[i].max(min_x as f64).max(0.0) as usize;
+                    let x2 = intersections[i + 1].min(max_x as f64).min(image.width as f64 - 1.0) as usize;
                     
                     for x in x1..=x2 {
                         image.set_pixel(x, y, pixel);

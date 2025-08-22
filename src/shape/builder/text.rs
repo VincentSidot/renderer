@@ -13,7 +13,7 @@ pub struct TextBuilder {
     x: Option<f64>,
     y: Option<f64>,
     content: Option<String>,
-    font_size: Option<f64>,
+    font_size: Option<f32>,
     #[cfg(any(feature = "rasterizer", feature = "fonts"))]
     width: Option<f64>,
     #[cfg(any(feature = "rasterizer", feature = "fonts"))]
@@ -47,7 +47,7 @@ impl TextBuilder {
     /// Set the font size
     pub fn with_font_size<T>(mut self, size: T) -> Self
     where
-        T: Into<f64>,
+        T: Into<f32>,
     {
         self.font_size = Some(size.into());
         self
@@ -123,7 +123,7 @@ impl ShapeBuilder<Text> for TextBuilder {
                     // For now, we'll just use a simple heuristic for font size
                     // In a real implementation, this would use the rasterizer to calculate
                     // the optimal font size based on the text content and box dimensions
-                    let font_size = (width.min(height) * 0.8).min(72.0); // Cap at 72pt
+                    let font_size = (width.min(height) * 0.8).min(72.0) as f32; // Cap at 72pt
 
                     return Ok(Text {
                         x,
@@ -136,7 +136,7 @@ impl ShapeBuilder<Text> for TextBuilder {
             }
         }
 
-        let font_size = self.font_size.unwrap_or(16.0);
+        let font_size = self.font_size.unwrap_or(16.0f32);
 
         // Validate font size
         if font_size.is_nan() || font_size <= 0.0 {
@@ -225,7 +225,7 @@ mod tests {
     fn test_text_builder_nan_font_size() {
         let result = TextBuilder::new()
             .with_text("Hello, World!")
-            .with_font_size(f64::NAN)
+            .with_font_size(f32::NAN)
             .build();
 
         assert!(matches!(result, Err(BuildError::InvalidValue(_))));

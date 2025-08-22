@@ -11,7 +11,7 @@ pub struct Text {
     /// Text content
     pub(crate) content: String,
     /// Font size
-    pub(crate) font_size: f64,
+    pub(crate) font_size: f32,
     /// Fill color
     pub(crate) fill_color: Option<Color>,
 }
@@ -48,7 +48,7 @@ impl Text {
     /// Set the font size
     pub fn with_font_size<T>(mut self, size: T) -> Self
     where
-        T: Into<f64>,
+        T: Into<f32>,
     {
         self.font_size = size.into();
         self
@@ -76,7 +76,7 @@ impl Text {
     }
 
     /// Get the font size
-    pub fn font_size(&self) -> f64 {
+    pub fn font_size(&self) -> f32 {
         self.font_size
     }
 
