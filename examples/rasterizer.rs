@@ -3,9 +3,10 @@
 #[cfg(feature = "rasterizer")]
 use renderer::{
     PixelImage,
+    builder::ShapeBuilder,
     color::Color,
     rasterizer::Rasterizer,
-    shape::{Circle, Line, Polygon, Rectangle},
+    shape::{CircleBuilder, LineBuilder, PolygonBuilder, RectangleBuilder},
     stroke,
 };
 
@@ -18,39 +19,43 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     image.fill(renderer::Pixel::WHITE);
 
     // Create and rasterize a rectangle
-    let rectangle = Rectangle::new()
+    let rectangle = RectangleBuilder::new()
         .with_pos(10.0, 10.0)
         .with_size(50.0, 30.0)
-        .with_fill_color(Color::RED);
+        .with_fill_color(Color::RED)
+        .build()?;
 
     rectangle.rasterize_filled(&mut image);
 
     // Create and rasterize a circle
-    let circle = Circle::new()
-        .with_pos(100.0, 100.0)
+    let circle = CircleBuilder::new()
+        .with_center(100.0, 100.0)
         .with_radius(25.0)
-        .with_fill_color(Color::BLUE);
+        .with_fill_color(Color::BLUE)
+        .build()?;
 
     circle.rasterize_filled(&mut image);
 
     // Create and rasterize a line
-    let line = Line::new()
-        .with_pos(0.0, 0.0)
+    let line = LineBuilder::new()
+        .with_start(0.0, 0.0)
         .with_end(200.0, 200.0)
         .with_stroke(
             stroke::Stroke::new()
                 .with_size(1.0)
                 .with_color(Color::GREEN),
-        );
+        )
+        .build()?;
 
     line.rasterize(&mut image); // Lines don't have a filled version
 
     // Create and rasterize a polygon (triangle)
-    let triangle = Polygon::new()
+    let triangle = PolygonBuilder::new()
         .add_point(150.0, 50.0)
         .add_point(180.0, 80.0)
         .add_point(120.0, 80.0)
-        .with_fill_color(Color::GREEN);
+        .with_fill_color(Color::GREEN)
+        .build()?;
 
     triangle.rasterize_filled(&mut image);
 

@@ -1,6 +1,5 @@
 use crate::Color;
 use crate::Stroke;
-use std::convert::Into;
 
 /// An ellipse shape
 #[derive(Debug, Clone)]
@@ -21,7 +20,7 @@ pub struct Ellipse {
 
 impl Ellipse {
     /// Create a new ellipse
-    pub fn new() -> Self {
+    pub(crate) fn new() -> Self {
         Self {
             x: 0.0,
             y: 0.0,
@@ -30,40 +29,6 @@ impl Ellipse {
             fill_color: None,
             stroke: None,
         }
-    }
-
-    /// Set the position of the ellipse
-    pub fn with_pos<T, U>(mut self, x: T, y: U) -> Self
-    where
-        T: Into<f64>,
-        U: Into<f64>,
-    {
-        self.x = x.into();
-        self.y = y.into();
-        self
-    }
-
-    /// Set the radii of the ellipse
-    pub fn with_radii<T, U>(mut self, radius_x: T, radius_y: U) -> Self
-    where
-        T: Into<f64>,
-        U: Into<f64>,
-    {
-        self.radius_x = radius_x.into();
-        self.radius_y = radius_y.into();
-        self
-    }
-
-    /// Set the fill color of the ellipse
-    pub fn with_fill_color(mut self, color: Color) -> Self {
-        self.fill_color = Some(color);
-        self
-    }
-
-    /// Set the stroke of the ellipse
-    pub fn with_stroke(mut self, stroke: Stroke) -> Self {
-        self.stroke = Some(stroke);
-        self
     }
 
     /// Get the X position

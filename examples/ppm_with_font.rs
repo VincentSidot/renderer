@@ -3,9 +3,10 @@
 #[cfg(feature = "ppm")]
 use renderer::{
     backend::PPMBackend,
+    builder::ShapeBuilder,
     color::Color,
     image::Image,
-    shape::{self, Shape},
+    shape::{CircleBuilder, RectangleBuilder, TextBuilder, Shape},
     stroke,
 };
 
@@ -15,7 +16,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Add some shapes
     image.add(Shape::Rectangle(
-        shape::Rectangle::new()
+        RectangleBuilder::new()
             .with_pos(20.0, 40.0)
             .with_size(50.0, 50.0)
             .with_fill_color(Color::RED)
@@ -23,23 +24,26 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 stroke::Stroke::new()
                     .with_size(1.0)
                     .with_color(Color::rgb8(0x20, 0x20, 0x20)),
-            ),
+            )
+            .build()?
     ));
 
     image.add(Shape::Circle(
-        shape::Circle::new()
-            .with_pos(100.0, 100.0)
+        CircleBuilder::new()
+            .with_center(100.0, 100.0)
             .with_radius(50.0)
-            .with_fill_color(Color::rgba(1.0, 0.0, 0.0, 0.5)),
+            .with_fill_color(Color::rgba(1.0, 0.0, 0.0, 0.5))
+            .build()?
     ));
 
     // Add text with the default font
     image.add(Shape::Text(
-        shape::Text::new()
+        TextBuilder::new()
             .with_pos(200.0, 250.0)
             .with_text("Hello, PPM with Font!")
             .with_font_size(24.0)
-            .with_fill_color(Color::rgb8(0x00, 0x00, 0x00)),
+            .with_fill_color(Color::rgb8(0x00, 0x00, 0x00))
+            .build()?
     ));
 
     // Create a PPM backend with the default font

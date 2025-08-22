@@ -173,6 +173,8 @@ fn escape_text_content(text: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::builder::ShapeBuilder;
+    use crate::shape::TextBuilder;
     use std::path::Path;
 
     #[test]
@@ -198,10 +200,12 @@ mod tests {
 
         // Add text with special characters
         image.add(Shape::Text(
-            crate::shape::Text::new()
+            TextBuilder::new()
                 .with_pos(10.0, 10.0)
                 .with_text("Hello & welcome <to> \"SVG\"")
-                .with_font_size(12.0),
+                .with_font_size(12.0)
+                .build()
+                .unwrap(),
         ));
 
         // Create a temporary file path
