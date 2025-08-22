@@ -6,17 +6,17 @@ use std::convert::Into;
 #[derive(Debug, Clone)]
 pub struct Rectangle {
     /// X position
-    pub x: f64,
+    pub(crate) x: f64,
     /// Y position
-    pub y: f64,
+    pub(crate) y: f64,
     /// Width
-    pub width: f64,
+    pub(crate) width: f64,
     /// Height
-    pub height: f64,
+    pub(crate) height: f64,
     /// Fill color
-    pub fill_color: Option<Color>,
+    pub(crate) fill_color: Option<Color>,
     /// Stroke
-    pub stroke: Option<Stroke>,
+    pub(crate) stroke: Option<Stroke>,
 }
 
 impl Rectangle {
@@ -64,6 +64,36 @@ impl Rectangle {
     pub fn with_stroke(mut self, stroke: Stroke) -> Self {
         self.stroke = Some(stroke);
         self
+    }
+
+    /// Get the X position
+    pub fn x(&self) -> f64 {
+        self.x
+    }
+
+    /// Get the Y position
+    pub fn y(&self) -> f64 {
+        self.y
+    }
+
+    /// Get the width
+    pub fn width(&self) -> f64 {
+        self.width
+    }
+
+    /// Get the height
+    pub fn height(&self) -> f64 {
+        self.height
+    }
+
+    /// Get the fill color
+    pub fn fill_color(&self) -> Option<&Color> {
+        self.fill_color.as_ref()
+    }
+
+    /// Get the stroke
+    pub fn stroke(&self) -> Option<&Stroke> {
+        self.stroke.as_ref()
     }
 }
 

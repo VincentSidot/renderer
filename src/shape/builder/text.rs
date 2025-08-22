@@ -169,10 +169,10 @@ mod tests {
             .build()
             .expect("Failed to build text");
 
-        assert_eq!(text.x, 10.0);
-        assert_eq!(text.y, 20.0);
-        assert_eq!(text.content, "Hello, World!");
-        assert_eq!(text.font_size, 16.0);
+        assert_eq!(text.x(), 10.0);
+        assert_eq!(text.y(), 20.0);
+        assert_eq!(text.content(), "Hello, World!");
+        assert_eq!(text.font_size(), 16.0);
     }
 
     #[test]
@@ -182,10 +182,10 @@ mod tests {
             .build()
             .expect("Failed to build text");
 
-        assert_eq!(text.x, 0.0);
-        assert_eq!(text.y, 0.0);
-        assert_eq!(text.content, "Hello, World!");
-        assert_eq!(text.font_size, 16.0);
+        assert_eq!(text.x(), 0.0);
+        assert_eq!(text.y(), 0.0);
+        assert_eq!(text.content(), "Hello, World!");
+        assert_eq!(text.font_size(), 16.0);
     }
 
     #[test]
@@ -198,7 +198,7 @@ mod tests {
             .build()
             .expect("Failed to build text");
 
-        assert_eq!(text.fill_color, Some(color));
+        assert_eq!(text.fill_color(), Some(&color));
     }
 
     #[test]
@@ -241,10 +241,10 @@ mod tests {
             .build()
             .expect("Failed to build text");
 
-        assert_eq!(text.x, 10.0);
-        assert_eq!(text.y, 20.0);
-        assert_eq!(text.content, "Hello, World!");
+        assert_eq!(text.x(), 10.0);
+        assert_eq!(text.y(), 20.0);
+        assert_eq!(text.content(), "Hello, World!");
         // Font size should be calculated based on the smaller dimension (50.0 * 0.8 = 40.0)
-        assert_eq!(text.font_size, 40.0);
+        assert_eq!(text.font_size(), 40.0);
     }
 }

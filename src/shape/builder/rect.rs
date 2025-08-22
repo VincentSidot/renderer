@@ -108,10 +108,10 @@ mod tests {
             .build()
             .expect("Failed to build rectangle");
 
-        assert_eq!(rectangle.x, 10.0);
-        assert_eq!(rectangle.y, 20.0);
-        assert_eq!(rectangle.width, 50.0);
-        assert_eq!(rectangle.height, 30.0);
+        assert_eq!(rectangle.x(), 10.0);
+        assert_eq!(rectangle.y(), 20.0);
+        assert_eq!(rectangle.width(), 50.0);
+        assert_eq!(rectangle.height(), 30.0);
     }
 
     #[test]
@@ -121,10 +121,10 @@ mod tests {
             .build()
             .expect("Failed to build rectangle");
 
-        assert_eq!(rectangle.x, 0.0);
-        assert_eq!(rectangle.y, 0.0);
-        assert_eq!(rectangle.width, 50.0);
-        assert_eq!(rectangle.height, 30.0);
+        assert_eq!(rectangle.x(), 0.0);
+        assert_eq!(rectangle.y(), 0.0);
+        assert_eq!(rectangle.width(), 50.0);
+        assert_eq!(rectangle.height(), 30.0);
     }
 
     #[test]
@@ -139,8 +139,8 @@ mod tests {
             .build()
             .expect("Failed to build rectangle");
 
-        assert_eq!(rectangle.fill_color, Some(color));
-        assert_eq!(rectangle.stroke, Some(stroke));
+        assert_eq!(rectangle.fill_color(), Some(&color));
+        assert_eq!(rectangle.stroke(), Some(&stroke));
     }
 
     #[test]

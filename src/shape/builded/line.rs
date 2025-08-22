@@ -5,15 +5,15 @@ use std::convert::Into;
 #[derive(Debug, Clone)]
 pub struct Line {
     /// Start X position
-    pub x1: f64,
+    pub(crate) x1: f64,
     /// Start Y position
-    pub y1: f64,
+    pub(crate) y1: f64,
     /// End X position
-    pub x2: f64,
+    pub(crate) x2: f64,
     /// End Y position
-    pub y2: f64,
+    pub(crate) y2: f64,
     /// Stroke
-    pub stroke: Option<Stroke>,
+    pub(crate) stroke: Option<Stroke>,
 }
 
 impl Line {
@@ -54,6 +54,31 @@ impl Line {
     pub fn with_stroke(mut self, stroke: Stroke) -> Self {
         self.stroke = Some(stroke);
         self
+    }
+
+    /// Get the start X position
+    pub fn x1(&self) -> f64 {
+        self.x1
+    }
+
+    /// Get the start Y position
+    pub fn y1(&self) -> f64 {
+        self.y1
+    }
+
+    /// Get the end X position
+    pub fn x2(&self) -> f64 {
+        self.x2
+    }
+
+    /// Get the end Y position
+    pub fn y2(&self) -> f64 {
+        self.y2
+    }
+
+    /// Get the stroke
+    pub fn stroke(&self) -> Option<&Stroke> {
+        self.stroke.as_ref()
     }
 }
 

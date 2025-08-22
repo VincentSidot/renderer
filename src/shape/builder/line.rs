@@ -98,10 +98,10 @@ mod tests {
             .build()
             .expect("Failed to build line");
 
-        assert_eq!(line.x1, 0.0);
-        assert_eq!(line.y1, 0.0);
-        assert_eq!(line.x2, 10.0);
-        assert_eq!(line.y2, 10.0);
+        assert_eq!(line.x1(), 0.0);
+        assert_eq!(line.y1(), 0.0);
+        assert_eq!(line.x2(), 10.0);
+        assert_eq!(line.y2(), 10.0);
     }
 
     #[test]
@@ -115,7 +115,7 @@ mod tests {
             .build()
             .expect("Failed to build line");
 
-        assert_eq!(line.stroke, Some(stroke));
+        assert_eq!(line.stroke(), Some(&stroke));
     }
 
     #[test]

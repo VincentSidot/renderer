@@ -108,10 +108,10 @@ mod tests {
             .build()
             .expect("Failed to build ellipse");
 
-        assert_eq!(ellipse.x, 10.0);
-        assert_eq!(ellipse.y, 20.0);
-        assert_eq!(ellipse.radius_x, 30.0);
-        assert_eq!(ellipse.radius_y, 20.0);
+        assert_eq!(ellipse.x(), 10.0);
+        assert_eq!(ellipse.y(), 20.0);
+        assert_eq!(ellipse.radius_x(), 30.0);
+        assert_eq!(ellipse.radius_y(), 20.0);
     }
 
     #[test]
@@ -121,10 +121,10 @@ mod tests {
             .build()
             .expect("Failed to build ellipse");
 
-        assert_eq!(ellipse.x, 0.0);
-        assert_eq!(ellipse.y, 0.0);
-        assert_eq!(ellipse.radius_x, 30.0);
-        assert_eq!(ellipse.radius_y, 20.0);
+        assert_eq!(ellipse.x(), 0.0);
+        assert_eq!(ellipse.y(), 0.0);
+        assert_eq!(ellipse.radius_x(), 30.0);
+        assert_eq!(ellipse.radius_y(), 20.0);
     }
 
     #[test]
@@ -139,8 +139,8 @@ mod tests {
             .build()
             .expect("Failed to build ellipse");
 
-        assert_eq!(ellipse.fill_color, Some(color));
-        assert_eq!(ellipse.stroke, Some(stroke));
+        assert_eq!(ellipse.fill_color(), Some(&color));
+        assert_eq!(ellipse.stroke(), Some(&stroke));
     }
 
     #[test]

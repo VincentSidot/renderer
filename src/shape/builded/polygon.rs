@@ -6,11 +6,11 @@ use std::convert::Into;
 #[derive(Debug, Clone)]
 pub struct Polygon {
     /// Points of the polygon (x, y)
-    pub points: Vec<(f64, f64)>,
+    pub(crate) points: Vec<(f64, f64)>,
     /// Fill color
-    pub fill_color: Option<Color>,
+    pub(crate) fill_color: Option<Color>,
     /// Stroke
-    pub stroke: Option<Stroke>,
+    pub(crate) stroke: Option<Stroke>,
 }
 
 impl Polygon {
@@ -49,6 +49,21 @@ impl Polygon {
     pub fn with_stroke(mut self, stroke: Stroke) -> Self {
         self.stroke = Some(stroke);
         self
+    }
+
+    /// Get the points of the polygon
+    pub fn points(&self) -> &[(f64, f64)] {
+        &self.points
+    }
+
+    /// Get the fill color
+    pub fn fill_color(&self) -> Option<&Color> {
+        self.fill_color.as_ref()
+    }
+
+    /// Get the stroke
+    pub fn stroke(&self) -> Option<&Stroke> {
+        self.stroke.as_ref()
     }
 }
 

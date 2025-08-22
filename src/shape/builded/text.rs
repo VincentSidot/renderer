@@ -5,15 +5,15 @@ use std::convert::Into;
 #[derive(Debug, Clone)]
 pub struct Text {
     /// X position
-    pub x: f64,
+    pub(crate) x: f64,
     /// Y position
-    pub y: f64,
+    pub(crate) y: f64,
     /// Text content
-    pub content: String,
+    pub(crate) content: String,
     /// Font size
-    pub font_size: f64,
+    pub(crate) font_size: f64,
     /// Fill color
-    pub fill_color: Option<Color>,
+    pub(crate) fill_color: Option<Color>,
 }
 
 impl Text {
@@ -58,6 +58,31 @@ impl Text {
     pub fn with_fill_color(mut self, color: Color) -> Self {
         self.fill_color = Some(color);
         self
+    }
+
+    /// Get the X position
+    pub fn x(&self) -> f64 {
+        self.x
+    }
+
+    /// Get the Y position
+    pub fn y(&self) -> f64 {
+        self.y
+    }
+
+    /// Get the text content
+    pub fn content(&self) -> &str {
+        &self.content
+    }
+
+    /// Get the font size
+    pub fn font_size(&self) -> f64 {
+        self.font_size
+    }
+
+    /// Get the fill color
+    pub fn fill_color(&self) -> Option<&Color> {
+        self.fill_color.as_ref()
     }
 }
 

@@ -149,9 +149,9 @@ mod tests {
             .build()
             .expect("Failed to build circle");
 
-        assert_eq!(circle.x, 10.0);
-        assert_eq!(circle.y, 20.0);
-        assert_eq!(circle.radius, 5.0);
+        assert_eq!(circle.x(), 10.0);
+        assert_eq!(circle.y(), 20.0);
+        assert_eq!(circle.radius(), 5.0);
     }
 
     #[test]
@@ -162,9 +162,9 @@ mod tests {
             .build()
             .expect("Failed to build circle");
 
-        assert_eq!(circle.x, 10.0);
-        assert_eq!(circle.y, 20.0);
-        assert_eq!(circle.radius, 5.0);
+        assert_eq!(circle.x(), 10.0);
+        assert_eq!(circle.y(), 20.0);
+        assert_eq!(circle.radius(), 5.0);
     }
 
     #[test]
@@ -176,10 +176,10 @@ mod tests {
             .build()
             .expect("Failed to build circle");
 
-        assert_eq!(circle.x, 10.0);
-        assert_eq!(circle.y, 20.0);
+        assert_eq!(circle.x(), 10.0);
+        assert_eq!(circle.y(), 20.0);
         // Using epsilon comparison for floating point values
-        assert!((circle.radius - 5.0).abs() < 1e-10);
+        assert!((circle.radius() - 5.0).abs() < 1e-10);
     }
 
     #[test]
@@ -189,9 +189,9 @@ mod tests {
             .build()
             .expect("Failed to build circle");
 
-        assert_eq!(circle.x, 0.0);
-        assert_eq!(circle.y, 0.0);
-        assert_eq!(circle.radius, 5.0);
+        assert_eq!(circle.x(), 0.0);
+        assert_eq!(circle.y(), 0.0);
+        assert_eq!(circle.radius(), 5.0);
     }
 
     #[test]
@@ -206,8 +206,8 @@ mod tests {
             .build()
             .expect("Failed to build circle");
 
-        assert_eq!(circle.fill_color, Some(color));
-        assert_eq!(circle.stroke, Some(stroke));
+        assert_eq!(circle.fill_color(), Some(&color));
+        assert_eq!(circle.stroke(), Some(&stroke));
     }
 
     #[test]

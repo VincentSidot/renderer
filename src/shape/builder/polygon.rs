@@ -93,11 +93,11 @@ mod tests {
             .build()
             .expect("Failed to build polygon");
 
-        assert_eq!(polygon.points.len(), 4);
-        assert_eq!(polygon.points[0], (0.0, 0.0));
-        assert_eq!(polygon.points[1], (10.0, 0.0));
-        assert_eq!(polygon.points[2], (10.0, 10.0));
-        assert_eq!(polygon.points[3], (0.0, 10.0));
+        assert_eq!(polygon.points().len(), 4);
+        assert_eq!(polygon.points()[0], (0.0, 0.0));
+        assert_eq!(polygon.points()[1], (10.0, 0.0));
+        assert_eq!(polygon.points()[2], (10.0, 10.0));
+        assert_eq!(polygon.points()[3], (0.0, 10.0));
     }
 
     #[test]
@@ -108,7 +108,7 @@ mod tests {
             .build()
             .expect("Failed to build polygon");
 
-        assert_eq!(polygon.points.len(), 4);
+        assert_eq!(polygon.points().len(), 4);
     }
 
     #[test]
@@ -124,8 +124,8 @@ mod tests {
             .build()
             .expect("Failed to build polygon");
 
-        assert_eq!(polygon.fill_color, Some(color));
-        assert_eq!(polygon.stroke, Some(stroke));
+        assert_eq!(polygon.fill_color(), Some(&color));
+        assert_eq!(polygon.stroke(), Some(&stroke));
     }
 
     #[test]
