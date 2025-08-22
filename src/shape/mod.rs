@@ -1,6 +1,7 @@
 mod builded;
 mod builder;
 
+pub use builded::bezier::BezierCurve;
 pub use builded::circle::Circle;
 pub use builded::ellipse::Ellipse;
 pub use builded::line::Line;
@@ -8,6 +9,7 @@ pub use builded::polygon::Polygon;
 pub use builded::rect::Rectangle;
 pub use builded::text::Text;
 
+pub use builder::bezier::BezierCurveBuilder;
 pub use builder::circle::CircleBuilder;
 pub use builder::ellipse::EllipseBuilder;
 pub use builder::line::LineBuilder;
@@ -72,6 +74,8 @@ impl_shape! {
     Ellipse,
     /// Polygon shape
     Polygon,
+    /// Bezier curve shape
+    BezierCurve,
 }
 
 #[cfg(test)]

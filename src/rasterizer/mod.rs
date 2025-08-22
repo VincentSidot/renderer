@@ -1,8 +1,9 @@
+mod bezier;
 mod font;
 
 pub use font::FontRenderer;
 
-use crate::shape::{Circle, Ellipse, Line, Polygon, Rectangle};
+use crate::shape::{BezierCurve, Circle, Ellipse, Line, Polygon, Rectangle};
 
 /// A simple RGBA pixel
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

@@ -151,6 +151,89 @@ impl super::Backend for SVGBackend {
 
                     writeln!(file, "/>")?;
                 }
+                Shape::BezierCurve(bezier) => {
+                    // For SVG, we'll use a path element to represent the bezier curve
+                    // Format the path data
+                    if bezier.points.is_empty() {
+                        continue;
+                    }
+                    
+                    // Start the path with the first point
+                    let mut path_data = format!("M {} {}", bezier.points[0].0, bezier.points[0].1);
+                    
+                    // Add curve commands based on the number of points
+                    match bezier.points.len() {
+                        2 => {
+                            // Linear curve - just draw a line to the second point
+                            path_data.push_str(&format!(" L {} {}", bezier.points[1].0, bezier.points[1].1));
+                        },
+                        3 => {
+                            // Quadratic bezier curve
+                            path_data.push_str(&format!(
+                                " Q {} {} {} {}", 
+                                bezier.points[1].0, bezier.points[1].1,
+                                bezier.points[2].0, bezier.points[2].1
+                            ));
+                        },
+                        4 => {
+                            // Cubic bezier curve
+                            path_data.push_str(&format!(
+                                " C {} {} {} {} {} {}", 
+                                bezier.points[1].0, bezier.points[1].1,
+                                bezier.points[2].0, bezier.points[2].1,
+                                bezier.points[3].0, bezier.points[3].1
+                            ));
+                        },
+                        _ => {
+                            // For more than 4 points, we'll approximate with multiple cubic curves
+                            // This is a simplified approach - in a real implementation, you might
+                            // want to use a more sophisticated curve fitting algorithm
+                            for chunk in bezier.points[1..].chunks(3) {
+                                if chunk.len() == 1 {
+                                    // Linear to the point
+                                    path_data.push_str(&format!(" L {} {}", chunk[0].0, chunk[0].1));
+                                } else if chunk.len() == 2 {
+                                    // Quadratic curve
+                                    path_data.push_str(&format!(
+                                        " Q {} {} {} {}", 
+                                        chunk[0].0, chunk[0].1,
+                                        chunk[1].0, chunk[1].1
+                                    ));
+                                } else if chunk.len() == 3 {
+                                    // Cubic curve
+                                    path_data.push_str(&format!(
+                                        " C {} {} {} {} {} {}", 
+                                        chunk[0].0, chunk[0].1,
+                                        chunk[1].0, chunk[1].1,
+                                        chunk[2].0, chunk[2].1
+                                    ));
+                                }
+                            }
+                        }
+                    }
+                    
+                    write!(file, r#"  <path d="{path_data}""#)?;
+                    
+                    if let Some(stroke) = bezier.stroke {
+                        write!(
+                            file,
+                            r#" stroke="{}" stroke-width="{}""#,
+                            stroke.color, stroke.width
+                        )?;
+                    } else {
+                        // Default stroke if none provided
+                        write!(file, r#" stroke="black" stroke-width="1""#)?;
+                    }
+                    
+                    // Bezier curves are typically not filled, but we'll support it if specified
+                    if let Some(color) = bezier.fill_color {
+                        write!(file, r#" fill="{color}""#)?;
+                    } else {
+                        write!(file, r#" fill="none""#)?;
+                    }
+                    
+                    writeln!(file, "/>")?;
+                }
             }
         }
 

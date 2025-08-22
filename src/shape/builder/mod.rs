@@ -1,3 +1,4 @@
+pub mod bezier;
 pub mod circle;
 pub mod ellipse;
 pub mod line;
