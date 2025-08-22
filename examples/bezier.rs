@@ -1,13 +1,7 @@
 //! Example demonstrating bezier curve support
 
-#[cfg(feature = "svg")]
 use renderer::{
-    backend::SVGBackend,
-    builder::ShapeBuilder,
-    color::Color,
-    image::Image,
-    shape::{BezierCurveBuilder},
-    stroke,
+    builder::ShapeBuilder, color::Color, image::Image, shape::BezierCurveBuilder, stroke,
 };
 
 #[cfg(feature = "svg")]
@@ -16,8 +10,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Create a quadratic bezier curve
     let quadratic_bezier = BezierCurveBuilder::new()
-        .add_point(50.0, 200.0)  // Start point
-        .add_point(150.0, 50.0)  // Control point
+        .add_point(50.0, 200.0) // Start point
+        .add_point(150.0, 50.0) // Control point
         .add_point(250.0, 200.0) // End point
         .with_stroke(
             stroke::Stroke::new()
@@ -30,10 +24,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Create a cubic bezier curve
     let cubic_bezier = BezierCurveBuilder::new()
-        .add_point(300.0, 100.0)  // Start point
-        .add_point(350.0, 50.0)   // First control point
-        .add_point(400.0, 150.0)  // Second control point
-        .add_point(450.0, 100.0)  // End point
+        .add_point(300.0, 100.0) // Start point
+        .add_point(350.0, 50.0) // First control point
+        .add_point(400.0, 150.0) // Second control point
+        .add_point(450.0, 100.0) // End point
         .with_stroke(
             stroke::Stroke::new()
                 .with_size(2.0)
@@ -45,12 +39,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Create a more complex bezier curve with multiple segments
     let complex_bezier = BezierCurveBuilder::new()
-        .add_point(50.0, 50.0)   // Start point
+        .add_point(50.0, 50.0) // Start point
         .add_point(100.0, 100.0) // Control point 1
-        .add_point(150.0, 0.0)   // Control point 2
-        .add_point(200.0, 50.0)  // Control point 3
+        .add_point(150.0, 0.0) // Control point 2
+        .add_point(200.0, 50.0) // Control point 3
         .add_point(250.0, 100.0) // Control point 4
-        .add_point(300.0, 0.0)   // End point
+        .add_point(300.0, 0.0) // End point
         .with_stroke(
             stroke::Stroke::new()
                 .with_size(2.0)
@@ -60,17 +54,31 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     image.add(complex_bezier);
 
-    let mut svg = SVGBackend::init();
-    let path = std::path::Path::new("./trash/bezier_output.svg");
-    image.save(path, &mut svg)?;
-
-    println!("Bezier curve SVG file created at: {}", path.display());
+    #[cfg(feature = "svg")]
+    {
+        use renderer::backend::SVGBackend;
+        let mut svg = SVGBackend::new();
+        let path = std::path::Path::new("./trash/bezier_output.svg");
+        image.save(path, &mut svg)?;
+        println!("Bezier curve SVG file created at: {}", path.display());
+    }
+    #[cfg(feature = "png")]
+    {
+        use renderer::backend::PNGBackend;
+        let mut png = PNGBackend::new();
+        let path = std::path::Path::new("./trash/bezier_output.png");
+        image.save(path, &mut png)?;
+        println!("Bezier curve PNG file created at: {}", path.display());
+    }
 
     Ok(())
 }
 
+// Fallback main function if SVG feature and PNG feature are not enabled
+
 #[cfg(not(feature = "svg"))]
+#[cfg(not(feature = "png"))]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    println!("SVG feature is not enabled");
+    println!("Please enable the 'svg' or 'png' feature to run this example.");
     Ok(())
 }
