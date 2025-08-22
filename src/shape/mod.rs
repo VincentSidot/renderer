@@ -15,6 +15,8 @@ pub use builder::polygon::PolygonBuilder;
 pub use builder::rect::RectangleBuilder;
 pub use builder::text::TextBuilder;
 
+use crate::builder::BuildError;
+
 macro_rules! impl_shape {
     (
         $(
@@ -41,6 +43,19 @@ macro_rules! impl_shape {
                 }
             }
         )*
+        
+        $(
+            impl TryFrom<Shape> for $name {
+                type Error = BuildError;
+                
+                fn try_from(shape: Shape) -> Result<Self, Self::Error> {
+                    match shape {
+                        Shape::$name(inner) => Ok(inner),
+                        _ => Err(BuildError::InvalidValue(format!("Expected {}, found {:?}", stringify!($name), shape))),
+                    }
+                }
+            }
+        )*
     };
 }
 
@@ -58,3 +73,6 @@ impl_shape! {
     /// Polygon shape
     Polygon,
 }
+
+#[cfg(test)]
+mod tests;
