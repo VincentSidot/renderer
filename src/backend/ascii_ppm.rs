@@ -3,7 +3,6 @@
 use crate::shape::Shape;
 #[cfg(feature = "rasterizer")]
 use crate::rasterizer::{FontRenderer, PixelImage, Rasterizer};
-use crate::builder::ShapeBuilder;
 use std::fs::File;
 use std::io::Write;
 use std::path::Path;
@@ -80,24 +79,8 @@ impl super::Backend for AsciiPPMBackend {
                 Shape::Ellipse(ellipse) => ellipse.rasterize(&mut pixel_image),
                 Shape::Polygon(polygon) => polygon.rasterize(&mut pixel_image),
                 Shape::BezierCurve(bezier) => {
-                    // For now, we'll just draw lines between the control points
-                    // In a real implementation, you would rasterize the actual bezier curve
-                    if bezier.points.len() >= 2 {
-                        for i in 0..bezier.points.len() - 1 {
-                            let start = bezier.points[i];
-                            let end = bezier.points[i + 1];
-                            
-                            // Create a temporary line and rasterize it
-                            let line = crate::shape::LineBuilder::new()
-                                .with_start(start.0, start.1)
-                                .with_end(end.0, end.1)
-                                .with_stroke(bezier.stroke.unwrap_or_default())
-                                .build()
-                                .unwrap(); // This should be safe since we've validated the stroke
-                                
-                            line.rasterize(&mut pixel_image);
-                        }
-                    }
+                    // Rasterize the bezier curve directly
+                    bezier.rasterize(&mut pixel_image);
                 }
             }
         }
