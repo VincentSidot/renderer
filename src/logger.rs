@@ -49,12 +49,9 @@ impl log::Log for Logger {
             Level::Trace => "TRACE".magenta(),
         };
 
-        let file_line = if self.show_location
-            && let (Some(file), Some(line)) = (record.file(), record.line())
-        {
-            format!("{file}:{line}").dimmed()
-        } else {
-            "".dimmed()
+        let file_line = match (self.show_location, record.file(), record.line()) {
+            (true, Some(file), Some(line)) => format!("{file}:{line}").dimmed(),
+            _ => "".dimmed(),
         };
 
         let message = format!("[{}] {} {}", level, file_line, record.args());
