@@ -9,6 +9,12 @@ use std::path::Path;
 #[derive(Debug)]
 pub struct SVGBackend;
 
+impl Default for SVGBackend {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl SVGBackend {
     /// Initialize a new SVG backend
     pub fn new() -> Self {
