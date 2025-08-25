@@ -1,9 +1,9 @@
 //! Bezier curve shape builder
 
 use crate::{
+    Color, Stroke,
     builder::{BuildError, ShapeBuilder},
     shape::BezierCurve,
-    Color, Stroke,
 };
 use std::convert::Into;
 

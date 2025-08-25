@@ -71,7 +71,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     assert!(matches!(result, Err(BuildError::InvalidValue(_))));
     println!("Correctly caught invalid rectangle width");
 
-    let result = CircleBuilder::new().with_radius(5.0).with_diameter(10.0).build();
+    let result = CircleBuilder::new()
+        .with_radius(5.0)
+        .with_diameter(10.0)
+        .build();
     assert!(matches!(result, Err(BuildError::ConflictingProperties(_))));
     println!("Correctly caught conflicting circle properties");
 

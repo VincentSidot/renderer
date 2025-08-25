@@ -1,9 +1,9 @@
 //! Polygon shape builder
 
 use crate::{
+    Color, Stroke,
     builder::{BuildError, ShapeBuilder},
     shape::Polygon,
-    Color, Stroke,
 };
 use std::convert::Into;
 
@@ -130,7 +130,10 @@ mod tests {
 
     #[test]
     fn test_polygon_builder_not_enough_points() {
-        let result = PolygonBuilder::new().add_point(0.0, 0.0).add_point(10.0, 0.0).build();
+        let result = PolygonBuilder::new()
+            .add_point(0.0, 0.0)
+            .add_point(10.0, 0.0)
+            .build();
 
         assert!(matches!(result, Err(BuildError::InvalidValue(_))));
     }

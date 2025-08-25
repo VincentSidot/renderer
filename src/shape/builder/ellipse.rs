@@ -1,9 +1,9 @@
 //! Ellipse shape builder
 
 use crate::{
+    Color, Stroke,
     builder::{BuildError, ShapeBuilder},
     shape::Ellipse,
-    Color, Stroke,
 };
 use std::convert::Into;
 
@@ -151,10 +151,7 @@ mod tests {
 
         // Test with missing radius_x
         let result = EllipseBuilder::new().with_center(10.0, 20.0).build();
-        assert!(matches!(
-            result,
-            Err(BuildError::MissingRequiredField(_))
-        ));
+        assert!(matches!(result, Err(BuildError::MissingRequiredField(_))));
     }
 
     #[test]
@@ -173,9 +170,7 @@ mod tests {
 
     #[test]
     fn test_ellipse_builder_nan_values() {
-        let result = EllipseBuilder::new()
-            .with_radii(f64::NAN, 20.0)
-            .build();
+        let result = EllipseBuilder::new().with_radii(f64::NAN, 20.0).build();
 
         assert!(matches!(result, Err(BuildError::InvalidValue(_))));
     }

@@ -1,9 +1,9 @@
 //! Rectangle shape builder
 
 use crate::{
+    Color, Stroke,
     builder::{BuildError, ShapeBuilder},
     shape::Rectangle,
-    Color, Stroke,
 };
 use std::convert::Into;
 
@@ -151,10 +151,7 @@ mod tests {
 
         // Test with missing width
         let result = RectangleBuilder::new().with_pos(10.0, 20.0).build();
-        assert!(matches!(
-            result,
-            Err(BuildError::MissingRequiredField(_))
-        ));
+        assert!(matches!(result, Err(BuildError::MissingRequiredField(_))));
     }
 
     #[test]
@@ -173,9 +170,7 @@ mod tests {
 
     #[test]
     fn test_rectangle_builder_nan_values() {
-        let result = RectangleBuilder::new()
-            .with_size(f64::NAN, 30.0)
-            .build();
+        let result = RectangleBuilder::new().with_size(f64::NAN, 30.0).build();
 
         assert!(matches!(result, Err(BuildError::InvalidValue(_))));
     }

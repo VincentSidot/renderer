@@ -1,9 +1,9 @@
 //! Text shape builder
 
 use crate::{
+    Color,
     builder::{BuildError, ShapeBuilder},
     shape::Text,
-    Color,
 };
 use std::convert::Into;
 
@@ -205,10 +205,7 @@ mod tests {
     fn test_text_builder_missing_content() {
         let result = TextBuilder::new().build();
 
-        assert!(matches!(
-            result,
-            Err(BuildError::MissingRequiredField(_))
-        ));
+        assert!(matches!(result, Err(BuildError::MissingRequiredField(_))));
     }
 
     #[test]

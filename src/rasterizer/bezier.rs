@@ -95,24 +95,20 @@ fn rasterize_quadratic_bezier(image: &mut PixelImage, points: &[(f64, f64)], pix
     let p0 = points[0];
     let p1 = points[1];
     let p2 = points[2];
-    
+
     // Sample the curve at regular intervals
     let steps = calculate_steps(p0, p1, p2);
-    
+
     let mut prev_point = p0;
-    
+
     for i in 0..=steps {
         let t = i as f64 / steps as f64;
-        
+
         // Quadratic bezier formula: B(t) = (1-t)²P₀ + 2(1-t)tP₁ + t²P₂
         let one_minus_t = 1.0 - t;
-        let x = one_minus_t * one_minus_t * p0.0 + 
-                2.0 * one_minus_t * t * p1.0 + 
-                t * t * p2.0;
-        let y = one_minus_t * one_minus_t * p0.1 + 
-                2.0 * one_minus_t * t * p1.1 + 
-                t * t * p2.1;
-        
+        let x = one_minus_t * one_minus_t * p0.0 + 2.0 * one_minus_t * t * p1.0 + t * t * p2.0;
+        let y = one_minus_t * one_minus_t * p0.1 + 2.0 * one_minus_t * t * p1.1 + t * t * p2.1;
+
         // Draw a line from the previous point to the current point
         draw_line(
             image,
@@ -122,7 +118,7 @@ fn rasterize_quadratic_bezier(image: &mut PixelImage, points: &[(f64, f64)], pix
             y as i32,
             pixel,
         );
-        
+
         prev_point = (x, y);
     }
 }
@@ -134,29 +130,29 @@ fn rasterize_cubic_bezier(image: &mut PixelImage, points: &[(f64, f64)], pixel: 
     let p1 = points[1];
     let p2 = points[2];
     let p3 = points[3];
-    
+
     // Sample the curve at regular intervals
     let steps = calculate_steps_cubic(p0, p1, p2, p3);
-    
+
     let mut prev_point = p0;
-    
+
     for i in 0..=steps {
         let t = i as f64 / steps as f64;
-        
+
         // Cubic bezier formula: B(t) = (1-t)³P₀ + 3(1-t)²tP₁ + 3(1-t)t²P₂ + t³P₃
         let one_minus_t = 1.0 - t;
         let one_minus_t_sq = one_minus_t * one_minus_t;
         let t_sq = t * t;
-        
-        let x = one_minus_t_sq * one_minus_t * p0.0 + 
-                3.0 * one_minus_t_sq * t * p1.0 + 
-                3.0 * one_minus_t * t_sq * p2.0 + 
-                t_sq * t * p3.0;
-        let y = one_minus_t_sq * one_minus_t * p0.1 + 
-                3.0 * one_minus_t_sq * t * p1.1 + 
-                3.0 * one_minus_t * t_sq * p2.1 + 
-                t_sq * t * p3.1;
-        
+
+        let x = one_minus_t_sq * one_minus_t * p0.0
+            + 3.0 * one_minus_t_sq * t * p1.0
+            + 3.0 * one_minus_t * t_sq * p2.0
+            + t_sq * t * p3.0;
+        let y = one_minus_t_sq * one_minus_t * p0.1
+            + 3.0 * one_minus_t_sq * t * p1.1
+            + 3.0 * one_minus_t * t_sq * p2.1
+            + t_sq * t * p3.1;
+
         // Draw a line from the previous point to the current point
         draw_line(
             image,
@@ -166,7 +162,7 @@ fn rasterize_cubic_bezier(image: &mut PixelImage, points: &[(f64, f64)], pixel: 
             y as i32,
             pixel,
         );
-        
+
         prev_point = (x, y);
     }
 }
@@ -193,7 +189,7 @@ fn calculate_steps(p0: (f64, f64), p1: (f64, f64), p2: (f64, f64)) -> usize {
     let len1 = ((p1.0 - p0.0).powi(2) + (p1.1 - p0.1).powi(2)).sqrt();
     let len2 = ((p2.0 - p1.0).powi(2) + (p2.1 - p1.1).powi(2)).sqrt();
     let total_len = len1 + len2;
-    
+
     // Use a simple heuristic: at least 10 steps, plus more steps for longer curves
     (10.0 + total_len / 5.0).max(2.0) as usize
 }
@@ -205,7 +201,7 @@ fn calculate_steps_cubic(p0: (f64, f64), p1: (f64, f64), p2: (f64, f64), p3: (f6
     let len2 = ((p2.0 - p1.0).powi(2) + (p2.1 - p1.1).powi(2)).sqrt();
     let len3 = ((p3.0 - p2.0).powi(2) + (p3.1 - p2.1).powi(2)).sqrt();
     let total_len = len1 + len2 + len3;
-    
+
     // Use a simple heuristic: at least 10 steps, plus more steps for longer curves
     (10.0 + total_len / 5.0).max(2.0) as usize
 }

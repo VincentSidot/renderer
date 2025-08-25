@@ -5,7 +5,7 @@ use renderer::{
     builder::ShapeBuilder,
     color::Color,
     image::Image,
-    shape::{BezierCurveBuilder},
+    shape::BezierCurveBuilder,
     stroke,
 };
 
@@ -15,8 +15,8 @@ fn render_svg() -> Result<(), Box<dyn std::error::Error>> {
 
     // Create a quadratic bezier curve
     let quadratic_bezier = BezierCurveBuilder::new()
-        .add_point(50.0, 200.0)  // Start point
-        .add_point(150.0, 50.0)  // Control point
+        .add_point(50.0, 200.0) // Start point
+        .add_point(150.0, 50.0) // Control point
         .add_point(250.0, 200.0) // End point
         .with_stroke(
             stroke::Stroke::new()
@@ -29,10 +29,10 @@ fn render_svg() -> Result<(), Box<dyn std::error::Error>> {
 
     // Create a cubic bezier curve
     let cubic_bezier = BezierCurveBuilder::new()
-        .add_point(300.0, 100.0)  // Start point
-        .add_point(350.0, 50.0)   // First control point
-        .add_point(400.0, 150.0)  // Second control point
-        .add_point(450.0, 100.0)  // End point
+        .add_point(300.0, 100.0) // Start point
+        .add_point(350.0, 50.0) // First control point
+        .add_point(400.0, 150.0) // Second control point
+        .add_point(450.0, 100.0) // End point
         .with_stroke(
             stroke::Stroke::new()
                 .with_size(2.0)
@@ -44,12 +44,12 @@ fn render_svg() -> Result<(), Box<dyn std::error::Error>> {
 
     // Create a more complex bezier curve with multiple segments
     let complex_bezier = BezierCurveBuilder::new()
-        .add_point(50.0, 50.0)   // Start point
+        .add_point(50.0, 50.0) // Start point
         .add_point(100.0, 100.0) // Control point 1
-        .add_point(150.0, 0.0)   // Control point 2
-        .add_point(200.0, 50.0)  // Control point 3
+        .add_point(150.0, 0.0) // Control point 2
+        .add_point(200.0, 50.0) // Control point 3
         .add_point(250.0, 100.0) // Control point 4
-        .add_point(300.0, 0.0)   // End point
+        .add_point(300.0, 0.0) // End point
         .with_stroke(
             stroke::Stroke::new()
                 .with_size(2.0)
@@ -74,8 +74,8 @@ fn render_png() -> Result<(), Box<dyn std::error::Error>> {
 
     // Create a quadratic bezier curve
     let quadratic_bezier = BezierCurveBuilder::new()
-        .add_point(50.0, 200.0)  // Start point
-        .add_point(150.0, 50.0)  // Control point
+        .add_point(50.0, 200.0) // Start point
+        .add_point(150.0, 50.0) // Control point
         .add_point(250.0, 200.0) // End point
         .with_stroke(
             stroke::Stroke::new()
@@ -88,10 +88,10 @@ fn render_png() -> Result<(), Box<dyn std::error::Error>> {
 
     // Create a cubic bezier curve
     let cubic_bezier = BezierCurveBuilder::new()
-        .add_point(300.0, 100.0)  // Start point
-        .add_point(350.0, 50.0)   // First control point
-        .add_point(400.0, 150.0)  // Second control point
-        .add_point(450.0, 100.0)  // End point
+        .add_point(300.0, 100.0) // Start point
+        .add_point(350.0, 50.0) // First control point
+        .add_point(400.0, 150.0) // Second control point
+        .add_point(450.0, 100.0) // End point
         .with_stroke(
             stroke::Stroke::new()
                 .with_size(2.0)
@@ -103,12 +103,12 @@ fn render_png() -> Result<(), Box<dyn std::error::Error>> {
 
     // Create a more complex bezier curve with multiple segments
     let complex_bezier = BezierCurveBuilder::new()
-        .add_point(50.0, 50.0)   // Start point
+        .add_point(50.0, 50.0) // Start point
         .add_point(100.0, 100.0) // Control point 1
-        .add_point(150.0, 0.0)   // Control point 2
-        .add_point(200.0, 50.0)  // Control point 3
+        .add_point(150.0, 0.0) // Control point 2
+        .add_point(200.0, 50.0) // Control point 3
         .add_point(250.0, 100.0) // Control point 4
-        .add_point(300.0, 0.0)   // End point
+        .add_point(300.0, 0.0) // End point
         .with_stroke(
             stroke::Stroke::new()
                 .with_size(2.0)

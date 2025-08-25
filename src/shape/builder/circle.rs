@@ -1,9 +1,9 @@
 //! Circle shape builder
 
 use crate::{
+    Color, Stroke,
     builder::{BuildError, ShapeBuilder},
     shape::Circle,
-    Color, Stroke,
 };
 use std::convert::Into;
 
@@ -217,20 +217,14 @@ mod tests {
             .with_diameter(10.0)
             .build();
 
-        assert!(matches!(
-            result,
-            Err(BuildError::ConflictingProperties(_))
-        ));
+        assert!(matches!(result, Err(BuildError::ConflictingProperties(_))));
     }
 
     #[test]
     fn test_circle_builder_missing_required_field() {
         let result = CircleBuilder::new().build();
 
-        assert!(matches!(
-            result,
-            Err(BuildError::MissingRequiredField(_))
-        ));
+        assert!(matches!(result, Err(BuildError::MissingRequiredField(_))));
     }
 
     #[test]

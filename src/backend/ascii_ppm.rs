@@ -1,8 +1,8 @@
 //! ASCII PPM Backend
 
-use crate::shape::Shape;
 #[cfg(feature = "rasterizer")]
 use crate::rasterizer::{FontRenderer, PixelImage, Rasterizer};
+use crate::shape::Shape;
 use std::fs::File;
 use std::io::Write;
 use std::path::Path;
@@ -21,7 +21,7 @@ impl AsciiPPMBackend {
             font_data: None,
         }
     }
-    
+
     /// Create a new ASCII PPM backend with custom font data
     #[cfg(feature = "rasterizer")]
     pub fn with_font_data(font_data: Vec<u8>) -> Self {

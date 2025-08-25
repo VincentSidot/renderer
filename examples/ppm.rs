@@ -6,7 +6,10 @@ use renderer::{
     builder::ShapeBuilder,
     color::Color,
     image::Image,
-    shape::{CircleBuilder, EllipseBuilder, LineBuilder, PolygonBuilder, RectangleBuilder, TextBuilder, Shape},
+    shape::{
+        CircleBuilder, EllipseBuilder, LineBuilder, PolygonBuilder, RectangleBuilder, Shape,
+        TextBuilder,
+    },
     stroke,
 };
 
@@ -24,7 +27,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     .with_size(1.0)
                     .with_color(Color::rgb8(0x20, 0x20, 0x20)),
             )
-            .build()?
+            .build()?,
     ));
 
     image.add(Shape::Circle(
@@ -32,7 +35,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .with_center(100.0, 100.0)
             .with_radius(50.0)
             .with_fill_color(Color::rgba(1.0, 0.0, 0.0, 0.5))
-            .build()?
+            .build()?,
     ));
 
     image.add(Shape::Line(
@@ -44,7 +47,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     .with_size(2.0)
                     .with_color(Color::rgb8(0x00, 0x00, 0xFF)),
             )
-            .build()?
+            .build()?,
     ));
 
     image.add(Shape::Ellipse(
@@ -57,7 +60,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     .with_size(2.0)
                     .with_color(Color::BLACK),
             )
-            .build()?
+            .build()?,
     ));
 
     image.add(Shape::Polygon(
@@ -73,7 +76,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     .with_size(1.0)
                     .with_color(Color::BLACK),
             )
-            .build()?
+            .build()?,
     ));
 
     // Add text with different font sizes
@@ -83,7 +86,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .with_text("Small text")
             .with_font_size(12.0)
             .with_fill_color(Color::rgb8(0x00, 0x00, 0x00))
-            .build()?
+            .build()?,
     ));
 
     image.add(Shape::Text(
@@ -92,7 +95,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .with_text("Medium text")
             .with_font_size(24.0)
             .with_fill_color(Color::rgb8(0x00, 0x00, 0x00))
-            .build()?
+            .build()?,
     ));
 
     image.add(Shape::Text(
@@ -101,7 +104,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .with_text("Large text")
             .with_font_size(36.0)
             .with_fill_color(Color::rgb8(0x00, 0x00, 0x00))
-            .build()?
+            .build()?,
     ));
 
     let mut ppm = PPMBackend::new();

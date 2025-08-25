@@ -45,11 +45,11 @@ macro_rules! impl_shape {
                 }
             }
         )*
-        
+
         $(
             impl TryFrom<Shape> for $name {
                 type Error = BuildError;
-                
+
                 fn try_from(shape: Shape) -> Result<Self, Self::Error> {
                     match shape {
                         Shape::$name(inner) => Ok(inner),

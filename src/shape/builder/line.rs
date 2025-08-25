@@ -1,9 +1,9 @@
 //! Line shape builder
 
 use crate::{
+    Stroke,
     builder::{BuildError, ShapeBuilder},
     shape::Line,
-    Stroke,
 };
 use std::convert::Into;
 
@@ -122,20 +122,14 @@ mod tests {
     fn test_line_builder_missing_start_x() {
         let result = LineBuilder::new().with_end(10.0, 10.0).build();
 
-        assert!(matches!(
-            result,
-            Err(BuildError::MissingRequiredField(_))
-        ));
+        assert!(matches!(result, Err(BuildError::MissingRequiredField(_))));
     }
 
     #[test]
     fn test_line_builder_missing_end_y() {
         let result = LineBuilder::new().with_start(0.0, 0.0).build();
 
-        assert!(matches!(
-            result,
-            Err(BuildError::MissingRequiredField(_))
-        ));
+        assert!(matches!(result, Err(BuildError::MissingRequiredField(_))));
     }
 
     #[test]

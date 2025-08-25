@@ -1,6 +1,6 @@
 //! Image module for the renderer
 
-use crate::{backend::Backend, shape::Shape, builder::BuildError};
+use crate::{backend::Backend, builder::BuildError, shape::Shape};
 use std::convert::Into;
 use std::path::Path;
 
