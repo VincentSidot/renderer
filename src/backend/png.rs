@@ -108,16 +108,14 @@ fn save_as_png(image: &PixelImage, path: &Path) -> Result<(), Box<dyn std::error
     let w = &mut BufWriter::new(file);
 
     let mut encoder = png::Encoder::new(w, image.width as u32, image.height as u32);
-    encoder.set_color(png::ColorType::Rgb);
+    encoder.set_color(png::ColorType::Rgba);
     encoder.set_depth(png::BitDepth::Eight);
     let mut writer = encoder.write_header()?;
 
     // Convert our pixel data to the format expected by the PNG encoder
     let mut png_data = Vec::with_capacity(image.pixels.len() * 3);
     for pixel in &image.pixels {
-        png_data.push(pixel.r);
-        png_data.push(pixel.g);
-        png_data.push(pixel.b);
+        png_data.extend_from_slice(&pixel.to_rgba8());
     }
 
     writer.write_image_data(&png_data)?;

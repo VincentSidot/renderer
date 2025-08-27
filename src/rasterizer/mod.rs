@@ -24,6 +24,11 @@ impl Pixel {
     pub fn rgb(r: u8, g: u8, b: u8) -> Self {
         Self { r, g, b, a: 255 }
     }
+
+    /// Convert the pixel to an array of 4 u8 values (RGBA)
+    pub fn to_rgba8(&self) -> [u8; 4] {
+        [self.r, self.g, self.b, self.a]
+    }
 }
 
 /// Predefined colors

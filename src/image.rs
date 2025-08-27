@@ -49,10 +49,10 @@ impl Image {
     }
 
     /// Save the image using the provided backend
-    pub fn save<P: AsRef<Path>, B: Backend>(
+    pub fn save<P: AsRef<Path>>(
         &self,
         path: P,
-        backend: &mut B,
+        backend: &mut dyn Backend,
     ) -> Result<(), Box<dyn std::error::Error>> {
         backend.render(self, path.as_ref())
     }
