@@ -39,8 +39,8 @@ impl TextBuilder {
     }
 
     /// Set the text content
-    pub fn with_text<S: Into<String>>(mut self, text: S) -> Self {
-        self.content = Some(text.into());
+    pub fn with_text<S: ToString>(mut self, text: S) -> Self {
+        self.content = Some(text.to_string());
         self
     }
 

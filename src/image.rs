@@ -25,6 +25,14 @@ impl Image {
         }
     }
 
+    pub fn width(&self) -> f64 {
+        self.width
+    }
+
+    pub fn height(&self) -> f64 {
+        self.height
+    }
+
     /// Set the width of the image
     pub fn with_width<T>(mut self, width: T) -> Self
     where
@@ -39,6 +47,16 @@ impl Image {
     where
         T: Into<f64>,
     {
+        self.height = height.into();
+        self
+    }
+
+    pub fn with_size<T, U>(mut self, width: T, height: U) -> Self
+    where
+        T: Into<f64>,
+        U: Into<f64>,
+    {
+        self.width = width.into();
         self.height = height.into();
         self
     }
